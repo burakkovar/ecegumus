@@ -45,10 +45,10 @@
       cursor: pointer;
       font-weight: bold;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
     }
-
-    button:focus {
-      outline: none;
+    button:hover {
+      background-color: #c2185b;
     }
 
     .error {
@@ -208,37 +208,37 @@
       }
     }
 
-    /* Müzik başlatma butonu */
+    /* Müzik butonu */
     .music-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
       background-color: #e91e63;
       color: white;
-      padding: 10px 25px;
+      padding: 10px 15px;
       border: none;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 20;
       transition: background-color 0.3s ease;
-      margin: 20px auto 0 auto;
-      display: block;
-      font-size: 16px;
-      user-select: none;
     }
     .music-btn:hover {
       background-color: #c2185b;
     }
 
-    /* Müzik görselleştirici canvas */
+    /* Canvas görselleştirici */
     #visualizer {
-      display: none; /* Başta gizli */
-      margin: 20px auto 0 auto;
-      display: block;
+      margin-top: 15px;
       width: 100%;
-      max-width: 300px;
       height: 100px;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
-      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 25px rgba(233, 30, 99, 0.8);
+      background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+      cursor: pointer;
+      display: none; /* Başlangıçta gizli */
+      z-index: 15;
     }
 
     /* Responsive mobil uyumluluk */
@@ -254,12 +254,10 @@
         font-size: 1em;
       }
       .music-btn {
-        padding: 8px 20px;
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
         font-size: 14px;
-      }
-      #visualizer {
-        max-width: 90vw;
-        height: 80px;
       }
     }
   </style>
@@ -277,11 +275,10 @@
     <button onclick="login()">Giriş Yap</button>
     <div class="error" id="error"></div>
 
-    <!-- Müzik Başlatma Butonu -->
-    <button id="musicBtn" class="music-btn" onclick="startMusic()">🎵 Müziği Başlat</button>
-
     <!-- Müzik görselleştirici canvas -->
-    <canvas id="visualizer" width="300" height="100"></canvas>
+    <canvas id="visualizer" width="350" height="100"></canvas>
+    <!-- Müzik başlatma butonu -->
+    <button class="music-btn" id="musicBtn" onclick="startMusic()">🎵 Müziği Başlat</button>
   </div>
 
   <!-- Sevgi Dolu Yazılar -->
@@ -330,12 +327,12 @@
     const musicBtn = document.getElementById("musicBtn");
 
     let audioContext, analyser, source, dataArray, bufferLength;
-    let animationId;
 
     function startMusic() {
       audio.play().then(() => {
-        musicBtn.style.display = 'none';  // Butonu gizle
-        canvas.style.display = 'block';   // Canvas göster
+        // Butonu gizle, canvas'ı göster
+        musicBtn.style.display = 'none';
+        canvas.style.display = 'block';
 
         if (!audioContext) {
           audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -357,25 +354,24 @@
     }
 
     function draw() {
-      animationId = requestAnimationFrame(draw);
-
+      requestAnimationFrame(draw);
       analyser.getByteTimeDomainData(dataArray);
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.lineWidth = 3;
-      ctx.strokeStyle = 'rgb(233, 30, 99)';
-      ctx.shadowColor = '#e91e63';
+      ctx.strokeStyle = 'rgba(233, 30, 99, 0.8)';
+      ctx.shadowColor = '#ff69b4';
       ctx.shadowBlur = 15;
+
       ctx.beginPath();
 
-      let sliceWidth = canvas.width * 1.0 / bufferLength;
+      const sliceWidth = canvas.width * 1.0 / bufferLength;
       let x = 0;
 
       for(let i = 0; i < bufferLength; i++) {
-        let v = dataArray[i] / 128.0; // 0..2
-        let y = v * canvas.height/2;
+        const v = dataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
 
         if(i === 0) {
           ctx.moveTo(x, y);
@@ -386,13 +382,13 @@
         x += sliceWidth;
       }
 
-      ctx.lineTo(canvas.width, canvas.height/2);
+      ctx.lineTo(canvas.width, canvas.height / 2);
       ctx.stroke();
     }
 
     function login() {
-      const user = document.getElementById('username').value.trim();
-      const pass = document.getElementById('password').value.trim();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
 
       if (user === 'ecegumus' && pass === '123') {
         window.location.href = 'giris.html';
