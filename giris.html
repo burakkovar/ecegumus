@@ -7,84 +7,74 @@
     body {
       background: #fff0f5;
       font-family: Arial, sans-serif;
-      padding: 30px;
       margin: 0;
+      padding: 30px;
     }
 
     .container {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: repeat(3, 1fr); /* 2 foto + 1 buton */
+      grid-template-rows: repeat(4, auto); /* 3 satır + fazladan 1 opsiyonel */
       gap: 20px;
       max-width: 1000px;
       margin: auto;
+      align-items: center;
     }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(3, auto);
-      gap: 15px;
-    }
-
-    .gallery img {
+    .photo {
       width: 100%;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: stretch;
-    }
-
-    .links a {
+    .link-btn {
       display: block;
       background-color: #e91e63;
       color: white;
       text-align: center;
       padding: 12px;
-      margin-bottom: 15px;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
       transition: background-color 0.3s;
     }
 
-    .links a:hover {
+    .link-btn:hover {
       background-color: #c2185b;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #880e4f;
     }
   </style>
 </head>
 <body>
 
-  <h1 style="text-align: center;">💖 Hoş geldin Ece 💖</h1>
+  <h1>💖 Hoş geldin Ece 💖</h1>
 
   <div class="container">
-    
-    <!-- Sol taraf: 2x3 Resim -->
-    <div class="gallery">
-      <img src="fotolar/foto1.jpg" alt="Foto 1">
-      <img src="fotolar/foto2.jpg" alt="Foto 2">
-      <img src="fotolar/foto3.jpg" alt="Foto 3">
-      <img src="fotolar/foto4.jpg" alt="Foto 4">
-      <img src="fotolar/foto5.jpg" alt="Foto 5">
-      <img src="fotolar/foto6.jpg" alt="Foto 6">
-      <img src="fotolar/foto6.jpg" alt="Foto 7">
-      <img src="fotolar/foto6.jpg" alt="Foto 8">
-    </div>
+    <!-- Satır 1 -->
+    <img src="fotolar/foto1.jpg" alt="Foto 1" class="photo">
+    <img src="fotolar/foto2.jpg" alt="Foto 2" class="photo">
+    <a href="sayfa1.html" class="link-btn" target="_blank">💌 Mektubum</a>
 
-    <!-- Sağ taraf: Linkler -->
-    <div class="links">
-      <a href="sayfa1.html" target="_blank">💌 Mektubum</a>
-      <a href="sayfa2.html" target="_blank">📸 Anılarımız</a>
-      <a href="sayfa3.html" target="_blank">🎵 Şarkımız</a>
-      <a href="sayfa4.html" target="_blank">📅 Zaman Tüneli</a>
-      <a href="sayfa5.html" target="_blank">📅 Zaman Tüneli2</a>
-    </div>
+    <!-- Satır 2 -->
+    <img src="fotolar/foto3.jpg" alt="Foto 3" class="photo">
+    <img src="fotolar/foto4.jpg" alt="Foto 4" class="photo">
+    <a href="sayfa2.html" class="link-btn" target="_blank">📸 Anılarımız</a>
 
+    <!-- Satır 3 -->
+    <img src="fotolar/foto5.jpg" alt="Foto 5" class="photo">
+    <img src="fotolar/foto6.jpg" alt="Foto 6" class="photo">
+    <a href="sayfa3.html" class="link-btn" target="_blank">🎵 Şarkımız</a>
+
+    <!-- Satır 4 -->
+    <img src="fotolar/foto7.jpg" alt="Foto 7" class="photo">
+    <img src="fotolar/foto8.jpg" alt="Foto 8" class="photo">
+    <a href="sayfa4.html" class="link-btn" target="_blank">📅 Zaman Tüneli</a>
   </div>
 
 </body>
