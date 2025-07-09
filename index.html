@@ -58,8 +58,7 @@
       font-size: 1.4em;
       pointer-events: none;
       user-select: none;
-      animation: float 6s ease-in-out infinite alternate,
-                 rotate 12s linear infinite;
+      animation: float 6s ease-in-out infinite alternate, rotate 12s linear infinite, glow 3s ease-in-out infinite;
     }
 
     @keyframes float {
@@ -70,6 +69,11 @@
     @keyframes rotate {
       0% { transform: rotate(0deg) translateY(0); }
       100% { transform: rotate(360deg) translateY(20px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 5px #e91e63; }
+      50% { text-shadow: 0 0 15px #ff4081; }
     }
 
     /* Kalpler */
@@ -113,9 +117,29 @@
         transform: translateX(100px) rotate(45deg);
       }
     }
+
+    .romantic-message {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #880e4f;
+      text-shadow: 0 0 10px white;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Romantik Üst Mesaj -->
+  <div class="romantic-message">💘 Sadece sana özel... 💘</div>
 
   <!-- Giriş Kutusu -->
   <div class="login-box">
@@ -147,13 +171,18 @@
   <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
   <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
 
+  <!-- Arka Planda Müzik -->
+  <audio autoplay loop hidden>
+    <source src="muzik.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- Giriş Kontrolü -->
   <script>
     function login() {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
 
-      if (user === 'ecegumus' && pass === '123') {
+      if (user === 'ecegumus' && pass === '25haziran2019') {
         window.location.href = 'giris.html';
       } else {
         document.getElementById('error').textContent = '❌ Kullanıcı adı veya şifre yanlış!';
