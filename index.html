@@ -152,6 +152,20 @@
     .music-btn:hover {
       background-color: #c2185b;
     }
+
+    /* Canvas görselleştirici stil */
+    #visualizer {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 100px;
+      z-index: 1;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
+    }
   </style>
 </head>
 <body>
@@ -193,14 +207,58 @@
   <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
   <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
 
-  <!-- JS -->
+  <!-- Canvas Müzik Görselleştirici -->
+  <canvas id="visualizer" width="800" height="100"></canvas>
+
   <script>
+    const audio = document.getElementById("bgMusic");
+    const canvas = document.getElementById("visualizer");
+    const ctx = canvas.getContext("2d");
+
+    let audioContext, analyser, source, dataArray;
+
     function startMusic() {
-      const music = document.getElementById('bgMusic');
-      music.play().catch(err => {
+      audio.play().then(() => {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioContext.createAnalyser();
+          source = audioContext.createMediaElementSource(audio);
+          source.connect(analyser);
+          analyser.connect(audioContext.destination);
+          analyser.fftSize = 256;
+
+          const bufferLength = analyser.frequencyBinCount;
+          dataArray = new Uint8Array(bufferLength);
+
+          draw();
+        }
+      }).catch(err => {
         alert("Tarayıcı müziği başlatmayı engelliyor olabilir.");
         console.error(err);
       });
+    }
+
+    function draw() {
+      requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / dataArray.length) * 2.5;
+      let barHeight;
+      let x = 0;
+
+      for (let i = 0; i < dataArray.length; i++) {
+        barHeight = dataArray[i];
+        const r = 233;
+        const g = 30;
+        const b = 99;
+
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+        x += barWidth + 1;
+      }
     }
 
     function login() {
