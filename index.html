@@ -10,12 +10,10 @@
       height: 100vh;
       margin: 0;
       overflow: hidden;
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-
     .container {
       width: 350px;
       max-width: 90vw;
@@ -23,15 +21,13 @@
       position: relative;
       z-index: 10;
     }
-
     .login-box {
       background: white;
       padding: 30px;
-      border-radius: 12px 12px 0 0; /* Üstü yuvarlak, altı düz */
+      border-radius: 12px 12px 0 0;
       box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
       margin: 0;
     }
-
     input {
       padding: 10px;
       margin: 10px;
@@ -39,7 +35,6 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
-
     button {
       padding: 10px 20px;
       background-color: #e91e63;
@@ -49,163 +44,44 @@
       cursor: pointer;
       font-weight: bold;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin: 10px auto 0 auto;
+      display: block;
     }
-
+    #musicBtn {
+      background-color: #ad1457;
+      width: 100%;
+      font-size: 1.1em;
+    }
+    #musicBtn.playing {
+      background-color: #c2185b;
+    }
     .error {
       color: red;
       margin-top: 10px;
     }
-
     #visualizer {
       width: 100%;
       height: 100px;
-      border-radius: 0 0 12px 12px; /* Alt kısmı yuvarlak */
+      border-radius: 0 0 12px 12px;
       box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
       background: rgba(255,255,255,0.1);
       display: block;
-    }
-
-    /* Romantik Üst Mesaj */
-    .romantic-message {
-      position: absolute;
-      top: 5%;
-      width: 100%;
-      text-align: center;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #880e4f;
-      text-shadow: 0 0 10px white;
-      animation: pulse 4s ease-in-out infinite;
-      z-index: 20;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.9; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.05); }
-    }
-
-    /* Floating Text */
-    .floating-text {
-      position: absolute;
-      color: #c2185b;
-      font-weight: bold;
-      opacity: 0.25;
-      font-size: 1.4em;
-      pointer-events: none;
-      user-select: none;
-      animation: float 6s ease-in-out infinite alternate, rotate 12s linear infinite, glow 3s ease-in-out infinite;
-      z-index: 5;
-    }
-
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(20px); }
-    }
-
-    @keyframes rotate {
-      0% { transform: rotate(0deg) translateY(0); }
-      100% { transform: rotate(360deg) translateY(20px); }
-    }
-
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 5px #e91e63; }
-      50% { text-shadow: 0 0 15px #ff4081; }
-    }
-
-    /* Hearts */
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      transform: rotate(45deg);
-      animation: floatHeart 10s linear infinite;
-      opacity: 0.3;
-      z-index: 3;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: pink;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes floatHeart {
-      0% {
-        bottom: -20px;
-        transform: translateX(0) rotate(45deg);
-      }
-      100% {
-        bottom: 110%;
-        transform: translateX(100px) rotate(45deg);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .container {
-        width: 90vw;
-      }
-
-      #visualizer {
-        height: 80px;
-      }
-
-      input {
-        width: 90%;
-      }
+      margin-top: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Romantik Üst Mesaj -->
-  <div class="romantic-message">💘 Sadece Sana Özel Aşkım... 💘</div>
-
-  <!-- Sevgi Dolu Yazılar -->
-  <div class="floating-text" style="top: 10%; left: 12%;">Seni Seviyorum</div>
-  <div class="floating-text" style="top: 25%; left: 70%;">25 Haziran 2019</div>
-  <div class="floating-text" style="top: 75%; left: 30%;">22 Kasım 2025</div>
-  <div class="floating-text" style="top: 15%; left: 50%;">İyiki Varsın</div>
-  <div class="floating-text" style="top: 70%; left: 80%;">Güzelim</div>
-  <div class="floating-text" style="top: 40%; left: 10%;">Gülüm</div>
-  <div class="floating-text" style="top: 60%; left: 65%;">Canım</div>
-  <div class="floating-text" style="top: 45%; left: 25%;">Bir Tanem</div>
-  <div class="floating-text" style="top: 50%; left: 75%;">Her Şeyim</div>
-  <div class="floating-text" style="top: 85%; left: 55%;">Ömrüm</div>
-  <div class="floating-text" style="top: 10%; left: 35%;">Sevgilim</div>
-  <div class="floating-text" style="top: 85%; left: 15%;">Hayalim</div>
-
-  <!-- Kalpler -->
-  <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
-  <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
-  <div class="heart" style="left: 50%; animation-delay: 4s;"></div>
-  <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
-  <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
-
-  <!-- Giriş ve Müzik Görselleştirici -->
   <div class="container">
     <div class="login-box">
       <h2>💖 Giriş</h2>
       <input type="text" id="username" placeholder="Kullanıcı Adı"><br>
       <input type="password" id="password" placeholder="Şifre"><br>
       <button onclick="login()">Giriş Yap</button>
-      <div class="error" id="error"></div>
     </div>
+    <!-- Müzik Başlat Butonu -->
+    <button id="musicBtn">🎵 Müziği Başlat</button>
+    <!-- Görselleştirici -->
     <canvas id="visualizer" width="350" height="100"></canvas>
   </div>
 
@@ -213,36 +89,63 @@
     const audio = new Audio('muzik.mp3');
     audio.loop = true;
 
-    const canvas = document.getElementById("visualizer");
-    const ctx = canvas.getContext("2d");
+    const musicBtn = document.getElementById('musicBtn');
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
 
     let audioContext, analyser, source, dataArray;
 
-    function startMusic() {
-      audio.play().then(() => {
-        if (!audioContext) {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          analyser = audioContext.createAnalyser();
-          source = audioContext.createMediaElementSource(audio);
-          source.connect(analyser);
-          analyser.connect(audioContext.destination);
-          analyser.fftSize = 256;
+    musicBtn.addEventListener('click', () => {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        source = audioContext.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+      }
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+      if (audio.paused) {
+        audio.play();
+        musicBtn.textContent = "🔈 Müziği Durdur";
+        musicBtn.classList.add('playing');
+        draw();
+      } else {
+        audio.pause();
+        musicBtn.textContent = "🎵 Müziği Başlat";
+        musicBtn.classList.remove('playing');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    });
 
-          const bufferLength = analyser.frequencyBinCount;
-          dataArray = new Uint8Array(bufferLength);
+    function draw() {
+      if (!analyser) return;
 
-          draw();
-        }
-      }).catch(err => {
-        alert("Tarayıcı müziği başlatmayı engelliyor olabilir. Lütfen giriş butonuna basarak müziği başlatın.");
-        console.error(err);
-      });
+      requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = "rgba(255,255,255,0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / dataArray.length) * 2.5;
+      let x = 0;
+
+      for (let i = 0; i < dataArray.length; i++) {
+        const barHeight = dataArray[i];
+        ctx.fillStyle = `rgb(233,30,99)`;
+        ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+        x += barWidth + 1;
+      }
     }
 
-    // Kullanıcı giriş yaparken müziği başlat
     function login() {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
+      const errorDiv = document.getElementById('error');
 
       if (user === 'ecegumus' && pass === '123') {
         if (audioContext && audioContext.state === 'suspended') {
@@ -253,33 +156,10 @@
         }
         window.location.href = 'giris.html';
       } else {
-        document.getElementById('error').textContent = '❌ Kullanıcı adı veya şifre yanlış!';
+        alert('❌ Kullanıcı adı veya şifre yanlış!');
       }
     }
-
-    function draw() {
-      requestAnimationFrame(draw);
-      analyser.getByteFrequencyData(dataArray);
-
-      ctx.fillStyle = "rgba(255,255,255,0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const barWidth = (canvas.width / dataArray.length) * 2.5;
-      let barHeight;
-      let x = 0;
-
-      for (let i = 0; i < dataArray.length; i++) {
-        barHeight = dataArray[i];
-        ctx.fillStyle = `rgb(233,30,99)`;
-        ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
-        x += barWidth + 1;
-      }
-    }
-
-    // Sayfa açılır açılmaz otomatik çalmaya çalış (bazı tarayıcılar engelleyebilir)
-    window.onload = () => {
-      startMusic();
-    };
   </script>
+
 </body>
 </html>
