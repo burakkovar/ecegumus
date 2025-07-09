@@ -232,12 +232,12 @@
     #visualizer {
       margin-top: 15px;
       width: 100%;
-      height: 100px;
-      border-radius: 10px;
-      box-shadow: 0 0 25px rgba(233, 30, 99, 0.8);
-      background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+      height: 120px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px #e91e63cc;
+      background: linear-gradient(135deg, #ff8da8, #ff3f7f);
       cursor: pointer;
-      display: none; /* Başlangıçta gizli */
+      display: none;
       z-index: 15;
     }
 
@@ -276,7 +276,7 @@
     <div class="error" id="error"></div>
 
     <!-- Müzik görselleştirici canvas -->
-    <canvas id="visualizer" width="350" height="100"></canvas>
+    <canvas id="visualizer" width="350" height="120"></canvas>
     <!-- Müzik başlatma butonu -->
     <button class="music-btn" id="musicBtn" onclick="startMusic()">🎵 Müziği Başlat</button>
   </div>
@@ -328,9 +328,50 @@
 
     let audioContext, analyser, source, dataArray, bufferLength;
 
+    // Partikül ayarları
+    const particles = [];
+    const PARTICLE_COUNT = 50;
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height - 10 - Math.random() * 20;
+        this.radius = 1 + Math.random() * 2;
+        this.speed = 0.3 + Math.random() * 0.7;
+        this.opacity = 0.3 + Math.random() * 0.5;
+      }
+      update() {
+        this.x += this.speed;
+        if(this.x > canvas.width + this.radius) {
+          this.x = -this.radius;
+          this.y = canvas.height - 10 - Math.random() * 20;
+          this.opacity = 0.3 + Math.random() * 0.5;
+          this.radius = 1 + Math.random() * 2;
+          this.speed = 0.3 + Math.random() * 0.7;
+        }
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        gradient.addColorStop(0, `rgba(255, 105, 180, ${this.opacity})`);
+        gradient.addColorStop(1, `rgba(255, 105, 180, 0)`);
+        ctx.fillStyle = gradient;
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      for(let i=0; i<PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+      }
+    }
+
     function startMusic() {
       audio.play().then(() => {
-        // Butonu gizle, canvas'ı göster
         musicBtn.style.display = 'none';
         canvas.style.display = 'block';
 
@@ -342,9 +383,10 @@
           analyser.connect(audioContext.destination);
           analyser.fftSize = 2048;
 
-          bufferLength = analyser.fftSize;
+          bufferLength = analyser.frequencyBinCount;
           dataArray = new Uint8Array(bufferLength);
 
+          initParticles();
           draw();
         }
       }).catch(err => {
@@ -355,35 +397,54 @@
 
     function draw() {
       requestAnimationFrame(draw);
+
       analyser.getByteTimeDomainData(dataArray);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = 'rgba(233, 30, 99, 0.8)';
+      // Arka plan degrade (hafif)
+      const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bgGradient.addColorStop(0, '#ffb6c1aa');
+      bgGradient.addColorStop(1, '#ff3f7faa');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Dalga çizimi (neon efektli)
+      ctx.lineWidth = 4;
+
+      // Degrade renk oluştur
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      gradient.addColorStop(0, '#ff6fb5');
+      gradient.addColorStop(0.5, '#ff3f7f');
+      gradient.addColorStop(1, '#ff69b4');
+      ctx.strokeStyle = gradient;
+
       ctx.shadowColor = '#ff69b4';
-      ctx.shadowBlur = 15;
+      ctx.shadowBlur = 20;
 
       ctx.beginPath();
 
-      const sliceWidth = canvas.width * 1.0 / bufferLength;
+      const sliceWidth = canvas.width / bufferLength;
       let x = 0;
 
       for(let i = 0; i < bufferLength; i++) {
-        const v = dataArray[i] / 128.0;
-        const y = v * canvas.height / 2;
-
+        const v = dataArray[i] / 128.0; // 0-2 arası değer
+        const y = (v * canvas.height / 2) + (canvas.height / 4);
         if(i === 0) {
           ctx.moveTo(x, y);
         } else {
           ctx.lineTo(x, y);
         }
-
         x += sliceWidth;
       }
 
-      ctx.lineTo(canvas.width, canvas.height / 2);
       ctx.stroke();
+
+      // Partikülleri güncelle ve çiz
+      particles.forEach(p => {
+        p.update();
+        p.draw(ctx);
+      });
     }
 
     function login() {
