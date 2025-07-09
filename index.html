@@ -138,7 +138,7 @@
 <body>
 
   <!-- Romantik Üst Mesaj -->
-  <div class="romantic-message">💘 Sadece sana özel... 💘</div>
+  <div class="romantic-message">💘 Sadece Sana Özel Aşkım... 💘</div>
 
   <!-- Giriş Kutusu -->
   <div class="login-box">
@@ -171,7 +171,7 @@
   <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
 
   <!-- 🎵 Arka Plan Müzik -->
-  <audio id="romanticMusic" src="muzik.mp3" autoplay muted loop></audio>
+  <audio src="muzik.mp3" autoplay loop></audio>
 
   <script>
     function login() {
@@ -179,9 +179,6 @@
       const pass = document.getElementById('password').value;
 
       if (user === 'ecegumus' && pass === '123') {
-        const music = document.getElementById('romanticMusic');
-        music.muted = false;
-        music.play();
         window.location.href = 'giris.html';
       } else {
         document.getElementById('error').textContent = '❌ Kullanıcı adı veya şifre yanlış!';
