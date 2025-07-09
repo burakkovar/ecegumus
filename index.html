@@ -7,18 +7,25 @@
     body {
       background-color: #ffe4e1;
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
     }
+
     .login-box {
       background: white;
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
     }
+
     input {
       padding: 10px;
       margin: 10px;
@@ -26,6 +33,7 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
+
     button {
       padding: 10px 20px;
       background-color: #e91e63;
@@ -34,9 +42,26 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .error {
       color: red;
       margin-top: 10px;
+    }
+
+    .floating-text {
+      position: absolute;
+      color: #c2185b;
+      font-weight: bold;
+      opacity: 0.2;
+      font-size: 1.2em;
+      pointer-events: none;
+      user-select: none;
+      animation: float 20s infinite alternate;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(30px); }
     }
   </style>
 </head>
@@ -48,6 +73,19 @@
     <button onclick="login()">Giriş Yap</button>
     <div class="error" id="error"></div>
   </div>
+
+  <!-- Yayılmış yazılar -->
+  <div class="floating-text" style="top: 10%; left: 15%;">Seni Seviyorum</div>
+  <div class="floating-text" style="top: 20%; left: 70%;">25 Haziran 2019</div>
+  <div class="floating-text" style="top: 75%; left: 30%;">22 Kasım 2025</div>
+  <div class="floating-text" style="top: 15%; left: 45%;">İyi Ki Varsın</div>
+  <div class="floating-text" style="top: 60%; left: 80%;">Güzelim</div>
+  <div class="floating-text" style="top: 35%; left: 10%;">Gülüm</div>
+  <div class="floating-text" style="top: 70%; left: 60%;">Canım</div>
+  <div class="floating-text" style="top: 45%; left: 25%;">Bir Tanem</div>
+  <div class="floating-text" style="top: 50%; left: 75%;">Her Şeyim</div>
+  <div class="floating-text" style="top: 25%; left: 55%;">Ömrüm</div>
+  <div class="floating-text" style="top: 85%; left: 15%;">Hayalim</div>
 
   <script>
     function login() {
