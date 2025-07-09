@@ -133,13 +133,33 @@
         transform: translateX(100px) rotate(45deg);
       }
     }
+
+    .music-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 99;
+    }
+
+    .music-btn:hover {
+      background-color: #c2185b;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🎵 Arka Plan Müzik -->
-   <audio src="muzik.mp3" autoplay loop></audio>
-  
+  <!-- 🎵 Müzik butonu ve ses -->
+  <button class="music-btn" onclick="startMusic()">🎵 Müziği Başlat</button>
+  <audio id="bgMusic" src="muzik.mp3" loop></audio>
+
   <!-- Romantik Üst Mesaj -->
   <div class="romantic-message">💘 Sadece Sana Özel Aşkım... 💘</div>
 
@@ -173,9 +193,16 @@
   <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
   <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
 
- 
-
+  <!-- JS -->
   <script>
+    function startMusic() {
+      const music = document.getElementById('bgMusic');
+      music.play().catch(err => {
+        alert("Tarayıcı müziği başlatmayı engelliyor olabilir.");
+        console.error(err);
+      });
+    }
+
     function login() {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
