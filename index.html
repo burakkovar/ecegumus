@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Giriş | Sana Özel 💖</title>
   <style>
     body {
@@ -11,21 +11,25 @@
       margin: 0;
       overflow: hidden;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 350px;
+      max-width: 90vw;
+      text-align: center;
+      position: relative;
+      z-index: 10;
     }
 
     .login-box {
       background: white;
       padding: 30px;
-      border-radius: 12px;
+      border-radius: 12px 12px 0 0; /* Üstü yuvarlak, altı düz */
       box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      width: 350px;
-      max-width: 90vw;
+      margin: 0;
     }
 
     input {
@@ -52,6 +56,35 @@
       margin-top: 10px;
     }
 
+    #visualizer {
+      width: 100%;
+      height: 100px;
+      border-radius: 0 0 12px 12px; /* Alt kısmı yuvarlak */
+      box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
+      background: rgba(255,255,255,0.1);
+      display: block;
+    }
+
+    /* Romantik Üst Mesaj */
+    .romantic-message {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #880e4f;
+      text-shadow: 0 0 10px white;
+      animation: pulse 4s ease-in-out infinite;
+      z-index: 20;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    /* Floating Text */
     .floating-text {
       position: absolute;
       color: #c2185b;
@@ -61,6 +94,7 @@
       pointer-events: none;
       user-select: none;
       animation: float 6s ease-in-out infinite alternate, rotate 12s linear infinite, glow 3s ease-in-out infinite;
+      z-index: 5;
     }
 
     @keyframes float {
@@ -78,23 +112,7 @@
       50% { text-shadow: 0 0 15px #ff4081; }
     }
 
-    .romantic-message {
-      position: absolute;
-      top: 5%;
-      width: 100%;
-      text-align: center;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #880e4f;
-      text-shadow: 0 0 10px white;
-      animation: pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.9; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.05); }
-    }
-
+    /* Hearts */
     .heart {
       position: absolute;
       width: 20px;
@@ -103,6 +121,7 @@
       transform: rotate(45deg);
       animation: floatHeart 10s linear infinite;
       opacity: 0.3;
+      z-index: 3;
     }
 
     .heart::before,
@@ -136,89 +155,26 @@
       }
     }
 
-    .music-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background-color: #e91e63;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      z-index: 99;
-    }
-
-    .music-btn:hover {
-      background-color: #c2185b;
-    }
-
-    /* Canvas görselleştirici stil */
-    #visualizer {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 100px;
-      z-index: 1;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px 10px 0 0;
-      box-shadow: 0 0 20px rgba(233, 30, 99, 0.5);
-      max-width: 90vw;
-      width: 90vw;
-      height: 100px;
-    }
-
-    /* RESPONSIVE - Mobil uyumluluk için */
+    /* Responsive */
     @media (max-width: 600px) {
-      .login-box {
+      .container {
         width: 90vw;
-        padding: 20px;
-        left: 50%;
-        top: 40%;
-        transform: translate(-50%, -40%);
       }
 
       #visualizer {
-        width: 90vw !important;
         height: 80px;
-        left: 50%;
-        transform: translateX(-50%);
       }
 
-      .floating-text {
-        font-size: 1em;
-      }
-
-      .music-btn {
-        top: 10px;
-        right: 10px;
-        padding: 8px 12px;
-        font-size: 14px;
+      input {
+        width: 90%;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎵 Müzik butonu ve ses -->
-  <button class="music-btn" onclick="startMusic()">🎵 Müziği Başlat</button>
-  <audio id="bgMusic" src="muzik.mp3" loop></audio>
-
   <!-- Romantik Üst Mesaj -->
   <div class="romantic-message">💘 Sadece Sana Özel Aşkım... 💘</div>
-
-  <!-- Giriş Kutusu -->
-  <div class="login-box">
-    <h2>💖 Giriş</h2>
-    <input type="text" id="username" placeholder="Kullanıcı Adı"><br>
-    <input type="password" id="password" placeholder="Şifre"><br>
-    <button onclick="login()">Giriş Yap</button>
-    <div class="error" id="error"></div>
-  </div>
 
   <!-- Sevgi Dolu Yazılar -->
   <div class="floating-text" style="top: 10%; left: 12%;">Seni Seviyorum</div>
@@ -241,11 +197,22 @@
   <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
   <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
 
-  <!-- Canvas Müzik Görselleştirici -->
-  <canvas id="visualizer" width="800" height="100"></canvas>
+  <!-- Giriş ve Müzik Görselleştirici -->
+  <div class="container">
+    <div class="login-box">
+      <h2>💖 Giriş</h2>
+      <input type="text" id="username" placeholder="Kullanıcı Adı"><br>
+      <input type="password" id="password" placeholder="Şifre"><br>
+      <button onclick="login()">Giriş Yap</button>
+      <div class="error" id="error"></div>
+    </div>
+    <canvas id="visualizer" width="350" height="100"></canvas>
+  </div>
 
   <script>
-    const audio = document.getElementById("bgMusic");
+    const audio = new Audio('muzik.mp3');
+    audio.loop = true;
+
     const canvas = document.getElementById("visualizer");
     const ctx = canvas.getContext("2d");
 
@@ -272,6 +239,9 @@
       });
     }
 
+    // Otomatik müziği başlatmak için:
+    window.onload = startMusic;
+
     function draw() {
       requestAnimationFrame(draw);
       analyser.getByteFrequencyData(dataArray);
@@ -285,11 +255,7 @@
 
       for (let i = 0; i < dataArray.length; i++) {
         barHeight = dataArray[i];
-        const r = 233;
-        const g = 30;
-        const b = 99;
-
-        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillStyle = `rgb(233,30,99)`;
         ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
         x += barWidth + 1;
       }
@@ -306,6 +272,5 @@
       }
     }
   </script>
-
 </body>
 </html>
