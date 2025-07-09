@@ -76,7 +76,23 @@
       50% { text-shadow: 0 0 15px #ff4081; }
     }
 
-    /* Kalpler */
+    .romantic-message {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #880e4f;
+      text-shadow: 0 0 10px white;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
     .heart {
       position: absolute;
       width: 20px;
@@ -117,29 +133,12 @@
         transform: translateX(100px) rotate(45deg);
       }
     }
-
-    .romantic-message {
-      position: absolute;
-      top: 5%;
-      width: 100%;
-      text-align: center;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #880e4f;
-      text-shadow: 0 0 10px white;
-      animation: pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.9; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.05); }
-    }
   </style>
 </head>
 <body>
 
   <!-- Romantik Üst Mesaj -->
-  <div class="romantic-message">💘 Sadece Sana Özel Aşkım... 💘</div>
+  <div class="romantic-message">💘 Sadece sana özel... 💘</div>
 
   <!-- Giriş Kutusu -->
   <div class="login-box">
@@ -164,25 +163,25 @@
   <div class="floating-text" style="top: 10%; left: 35%;">Sevgilim</div>
   <div class="floating-text" style="top: 85%; left: 15%;">Hayalim</div>
 
-  <!-- Arka Planda Kalpler -->
+  <!-- Kalpler -->
   <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
   <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
   <div class="heart" style="left: 50%; animation-delay: 4s;"></div>
   <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
   <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
 
-  <!-- Arka Planda Müzik -->
-  <audio autoplay loop hidden>
-    <source src="muzik.mp3" type="audio/mpeg">
-  </audio>
+  <!-- 🎵 Arka Plan Müzik -->
+  <audio id="romanticMusic" src="muzik.mp3" autoplay muted loop></audio>
 
-  <!-- Giriş Kontrolü -->
   <script>
     function login() {
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
 
       if (user === 'ecegumus' && pass === '123') {
+        const music = document.getElementById('romanticMusic');
+        music.muted = false;
+        music.play();
         window.location.href = 'giris.html';
       } else {
         document.getElementById('error').textContent = '❌ Kullanıcı adı veya şifre yanlış!';
