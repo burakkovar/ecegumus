@@ -234,13 +234,28 @@
           draw();
         }
       }).catch(err => {
-        alert("Tarayıcı müziği başlatmayı engelliyor olabilir.");
+        alert("Tarayıcı müziği başlatmayı engelliyor olabilir. Lütfen giriş butonuna basarak müziği başlatın.");
         console.error(err);
       });
     }
 
-    // Otomatik müziği başlatmak için:
-    window.onload = startMusic;
+    // Kullanıcı giriş yaparken müziği başlat
+    function login() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === 'ecegumus' && pass === '123') {
+        if (audioContext && audioContext.state === 'suspended') {
+          audioContext.resume();
+        }
+        if (audio.paused) {
+          audio.play();
+        }
+        window.location.href = 'giris.html';
+      } else {
+        document.getElementById('error').textContent = '❌ Kullanıcı adı veya şifre yanlış!';
+      }
+    }
 
     function draw() {
       requestAnimationFrame(draw);
@@ -261,16 +276,10 @@
       }
     }
 
-    function login() {
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
-
-      if (user === 'ecegumus' && pass === '123') {
-        window.location.href = 'giris.html';
-      } else {
-        document.getElementById('error').textContent = '❌ Kullanıcı adı veya şifre yanlış!';
-      }
-    }
+    // Sayfa açılır açılmaz otomatik çalmaya çalış (bazı tarayıcılar engelleyebilir)
+    window.onload = () => {
+      startMusic();
+    };
   </script>
 </body>
 </html>
