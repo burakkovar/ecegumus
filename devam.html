@@ -147,6 +147,20 @@
   animate();
 </script>
 
+ <div id="days-counter" style="text-align: center; font-size: 24px; color: #880e4f; margin-top: 20px;"></div>
+
+<script>
+  const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
+  const today = new Date();
+
+  const diffTime = Math.abs(today - startDate);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  document.getElementById("days-counter").innerText =
+    `💘 Beraberliğimizin ${diffDays} günü 💘`;
+</script>
+
+
   
 </body>
 </html>
