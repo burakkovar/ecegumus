@@ -71,7 +71,11 @@
 
   <!-- 💘 GÜN SAYACI BAŞLIK -->
   <div id="days-counter" class="love-text">💘</div>
+  <!-- 🌸 Romantik sözler slaytı -->
+  <div id="romantic-words" style="text-align: center; font-size: 22px; color: #d81b60; margin-top: 10px;"></div>
 
+
+  
   <div class="container">
     <!-- Satır 1 -->
     <img src="fotolar/foto1.jpg" alt="Foto 1" class="photo">
@@ -162,15 +166,33 @@
     animate();
   </script>
 
-  <!-- 💘 GÜN SAYACI JS -->
-  <script>
-    const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
-    const today = new Date();
-    const diffTime = Math.abs(today - startDate);
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    document.getElementById("days-counter").innerText =
-      `💘 Beraberliğimizin ${diffDays} günü 💘`;
-  </script>
+
+<script>
+  // Gün sayacı
+  const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
+  const today = new Date();
+  const diffTime = Math.abs(today - startDate);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById("days-counter").innerText =
+    `💘 Beraberliğimizin ${diffDays} günü 💘`;
+
+  // Romantik yazı slaytı
+  const messages = [
+    "Seninle geçen her gün bir mucize 💖",
+    "Kalbim sadece sana ait 💌",
+    "İyi ki hayatımdasın 🌸",
+    "Aşkımızın her günü ayrı bir şiir 🥰",
+    "Sonsuzluğa seninle yürümek istiyorum 💍"
+  ];
+  let index = 0;
+
+  setInterval(() => {
+    document.getElementById("romantic-words").innerText = messages[index];
+    index = (index + 1) % messages.length;
+  }, 4000);
+</script>
+
+  
 
 </body>
 </html>
