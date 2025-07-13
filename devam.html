@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Hoş geldin Aşkım 💖</title>
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto+Slab&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -47,20 +48,32 @@
       background-color: #c2185b;
     }
 
-    /* El yazısı ve yanıp sönen yazı stili */
+    /* Gün sayacı - yanıp sönen kalpli yazı */
     @keyframes glowPulse {
       0%   { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4; opacity: 1; }
       50%  { text-shadow: 0 0 15px #e91e63, 0 0 25px #e91e63, 0 0 35px #e91e63; opacity: 0.6; }
       100% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4; opacity: 1; }
     }
 
-    .love-text {
+    #days-counter {
       font-family: 'Great Vibes', cursive;
       font-size: 36px;
       color: #e91e63;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 10px;
       animation: glowPulse 1.5s infinite;
+    }
+
+    /* Romantik yazılar stili */
+    #romantic-words {
+      font-family: 'Roboto Slab', serif;
+      font-size: 24px;
+      color: #d81b60;
+      text-align: center;
+      margin-top: 5px;
+      opacity: 1;
+      transition: opacity 1s ease;
+      min-height: 30px; /* Sabit yükseklik */
     }
   </style>
 </head>
@@ -69,13 +82,12 @@
   <!-- 🎵 MÜZİK -->
   <audio src="muzik1.mp3" autoplay loop></audio>
 
-  <!-- 💘 GÜN SAYACI BAŞLIK -->
-  <div id="days-counter" class="love-text">💘</div>
-  <!-- 🌸 Romantik sözler slaytı -->
-  <div id="romantic-words" style="text-align: center; font-size: 22px; color: #d81b60; margin-top: 10px;"></div>
+  <!-- Gün sayacı -->
+  <div id="days-counter">💘</div>
 
+  <!-- Romantik yazılar -->
+  <div id="romantic-words"></div>
 
-  
   <div class="container">
     <!-- Satır 1 -->
     <img src="fotolar/foto1.jpg" alt="Foto 1" class="photo">
@@ -98,18 +110,17 @@
     <a href="sayfa4.html" class="link-btn" target="_blank">📅 Zaman Tüneli</a>
   </div>
 
-  <!-- 🎆 HAVAİ FİŞEK EFEKTİ -->
+  <!-- 🎆 Havai Fişek -->
   <canvas id="fireworksCanvas" style="position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;"></canvas>
 
   <script>
+    // Havai fişek canvas setup
     const canvas = document.getElementById("fireworksCanvas");
     const ctx = canvas.getContext("2d");
-
     let W = window.innerWidth;
     let H = window.innerHeight;
     canvas.width = W;
     canvas.height = H;
-
     const particles = [];
 
     function randomColor() {
@@ -166,33 +177,44 @@
     animate();
   </script>
 
+  <script>
+    // Gün sayacı hesapla ve göster
+    const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
+    const today = new Date();
+    const diffTime = Math.abs(today - startDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("days-counter").innerText =
+      `💘 Beraberliğimizin ${diffDays} günü 💘`;
 
-<script>
-  // Gün sayacı
-  const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
-  const today = new Date();
-  const diffTime = Math.abs(today - startDate);
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  document.getElementById("days-counter").innerText =
-    `💘 Beraberliğimizin ${diffDays} günü 💘`;
+    // Romantik yazılar
+    const messages = [
+      "Seninle geçen her gün bir mucize 💖",
+      "Kalbim sadece sana ait 💌",
+      "İyi ki hayatımdasın 🌸",
+      "Aşkımızın her günü ayrı bir şiir 🥰",
+      "Sonsuzluğa seninle yürümek istiyorum 💍"
+    ];
 
-  // Romantik yazı slaytı
-  const messages = [
-    "Seninle geçen her gün bir mucize 💖",
-    "Kalbim sadece sana ait 💌",
-    "İyi ki hayatımdasın 🌸",
-    "Aşkımızın her günü ayrı bir şiir 🥰",
-    "Sonsuzluğa seninle yürümek istiyorum 💍"
-  ];
-  let index = 0;
+    let index = 0;
+    const romanticEl = document.getElementById("romantic-words");
 
-  setInterval(() => {
-    document.getElementById("romantic-words").innerText = messages[index];
-    index = (index + 1) % messages.length;
-  }, 4000);
-</script>
+    // İlk mesaj hemen gösterilir
+    romanticEl.innerText = messages[0];
 
-  
+    setInterval(() => {
+      // Fade out
+      romanticEl.style.opacity = 0;
+
+      setTimeout(() => {
+        // Mesaj değiştir
+        index = (index + 1) % messages.length;
+        romanticEl.innerText = messages[index];
+
+        // Fade in
+        romanticEl.style.opacity = 1;
+      }, 1000); // 1 saniye fade süresi
+    }, 4000); // 4 saniyede bir değişim başlar
+  </script>
 
 </body>
 </html>
