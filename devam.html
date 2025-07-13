@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Hoş geldin Aşkım 💖</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
     body {
       background: #fff0f5;
@@ -13,8 +16,8 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 2 foto + 1 buton */
-      grid-template-rows: repeat(4, auto); /* 3 satır + fazladan 1 opsiyonel */
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, auto);
       gap: 20px;
       max-width: 1000px;
       margin: auto;
@@ -44,10 +47,20 @@
       background-color: #c2185b;
     }
 
-    h1 {
+    /* El yazısı ve yanıp sönen yazı stili */
+    @keyframes glowPulse {
+      0%   { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4; opacity: 1; }
+      50%  { text-shadow: 0 0 15px #e91e63, 0 0 25px #e91e63, 0 0 35px #e91e63; opacity: 0.6; }
+      100% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4; opacity: 1; }
+    }
+
+    .love-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      color: #e91e63;
       text-align: center;
       margin-bottom: 40px;
-      color: #880e4f;
+      animation: glowPulse 1.5s infinite;
     }
   </style>
 </head>
@@ -56,7 +69,8 @@
   <!-- 🎵 MÜZİK -->
   <audio src="muzik1.mp3" autoplay loop></audio>
 
-  <h1>💖 Hoş geldin Ece 💖</h1>
+  <!-- 💘 GÜN SAYACI BAŞLIK -->
+  <div id="days-counter" class="love-text">💘</div>
 
   <div class="container">
     <!-- Satır 1 -->
@@ -79,88 +93,84 @@
     <img src="fotolar/foto8.jpg" alt="Foto 8" class="photo">
     <a href="sayfa4.html" class="link-btn" target="_blank">📅 Zaman Tüneli</a>
   </div>
-<canvas id="fireworksCanvas" style="position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;"></canvas>
 
-<script>
-  const canvas = document.getElementById("fireworksCanvas");
-  const ctx = canvas.getContext("2d");
+  <!-- 🎆 HAVAİ FİŞEK EFEKTİ -->
+  <canvas id="fireworksCanvas" style="position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;"></canvas>
 
-  let W = window.innerWidth;
-  let H = window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
+  <script>
+    const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
 
-  const particles = [];
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
 
-  function randomColor() {
-    return `hsl(${Math.random() * 360}, 100%, 60%)`;
-  }
+    const particles = [];
 
-  function createFirework(x, y) {
-    const count = 100;
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: x,
-        y: y,
-        angle: Math.random() * 2 * Math.PI,
-        speed: Math.random() * 4 + 1,
-        radius: 2,
-        color: randomColor(),
-        life: 60
-      });
+    function randomColor() {
+      return `hsl(${Math.random() * 360}, 100%, 60%)`;
     }
-  }
 
-  function updateParticles() {
-    ctx.clearRect(0, 0, W, H);
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      p.x += Math.cos(p.angle) * p.speed;
-      p.y += Math.sin(p.angle) * p.speed;
-      p.life--;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = p.color;
-      ctx.fill();
-    }
-    for (let i = particles.length - 1; i >= 0; i--) {
-      if (particles[i].life <= 0) {
-        particles.splice(i, 1);
+    function createFirework(x, y) {
+      const count = 100;
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          angle: Math.random() * 2 * Math.PI,
+          speed: Math.random() * 4 + 1,
+          radius: 2,
+          color: randomColor(),
+          life: 60
+        });
       }
     }
-  }
 
- setInterval(() => {
-  for (let i = 0; i < 2; i++) { 
-    const x = Math.random() * W;
-    const y = Math.random() * H / 2;
-    createFirework(x, y);
-  }
-}, 1000); 
+    function updateParticles() {
+      ctx.clearRect(0, 0, W, H);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.life--;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+      for (let i = particles.length - 1; i >= 0; i--) {
+        if (particles[i].life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
 
+    setInterval(() => {
+      for (let i = 0; i < 2; i++) {
+        const x = Math.random() * W;
+        const y = Math.random() * H / 2;
+        createFirework(x, y);
+      }
+    }, 1000);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    updateParticles();
-  }
+    function animate() {
+      requestAnimationFrame(animate);
+      updateParticles();
+    }
 
-  animate();
-</script>
+    animate();
+  </script>
 
- <div id="days-counter" style="text-align: center; font-size: 24px; color: #880e4f; margin-top: 20px;"></div>
+  <!-- 💘 GÜN SAYACI JS -->
+  <script>
+    const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
+    const today = new Date();
+    const diffTime = Math.abs(today - startDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("days-counter").innerText =
+      `💘 Beraberliğimizin ${diffDays} günü 💘`;
+  </script>
 
-<script>
-  const startDate = new Date(2019, 5, 25); // 25 Haziran 2019
-  const today = new Date();
-
-  const diffTime = Math.abs(today - startDate);
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-  document.getElementById("days-counter").innerText =
-    `💘 Beraberliğimizin ${diffDays} günü 💘`;
-</script>
-
-
-  
 </body>
 </html>
