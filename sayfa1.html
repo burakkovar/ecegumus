@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Zamanın Başlangıcı</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #fff0f5;
+      font-family: 'Chakra Petch', sans-serif;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 20px;
+      max-width: 1000px;
+      margin-bottom: 40px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .gallery img.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .final-text {
+      font-size: 22px;
+      color: #880e4f;
+      opacity: 0;
+      white-space: pre-wrap;
+      text-align: center;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 🎵 MÜZİK -->
+  <audio src="muzik1.mp3" autoplay loop muted></audio>
+
+  <div class="gallery">
+    <!-- 20 Fotoğraf -->
+    <!-- src="fotolar/foto1.jpg" den "foto20.jpg"'e kadar -->
+    <!-- Bu sadece ornek, kendi yollarını kullan -->
+    <img src="sayfa1/foto1.jpg">
+    <img src="sayfa1/foto2.jpg">
+    <img src="sayfa1/foto3.jpg">
+    <img src="sayfa1/foto4.jpg">
+    <img src="sayfa1/foto5.jpg">
+    <img src="sayfa1/foto6.jpg">
+    <img src="sayfa1/foto7.jpg">
+    <img src="sayfa1/foto8.jpg">
+    <img src="sayfa1/foto9.jpg">
+    <img src="sayfa1/foto10.jpg">
+    <img src="sayfa1/foto11.jpg">
+    <img src="sayfa1/foto12.jpg">
+    <img src="sayfa1/foto13.jpg">
+    <img src="sayfa1/foto14.jpg">
+    <img src="sayfa1/foto15.jpg">
+    <img src="sayfa1/foto16.jpg">
+    <img src="sayfa1/foto17.jpg">
+    <img src="sayfa1/foto18.jpg">
+    <img src="sayfa1/foto19.jpg">
+    <img src="sayfa1/foto20.jpg">
+  </div>
+
+  <div id="final-text" class="final-text"></div>
+
+  <script>
+    // Fotoğraf sırayla görünme
+    const images = document.querySelectorAll(".gallery img");
+    images.forEach((img, index) => {
+      setTimeout(() => {
+        img.classList.add("visible");
+      }, index * 2000); // 2 saniyede bir
+    });
+
+    // Yazı 20. resimden 3 sn sonra gelsin
+    const finalText = "O gün seni gördüğümde zaman durdu...\nVe şimdi her saniyem sana yazılı.";
+    const textContainer = document.getElementById("final-text");
+
+    setTimeout(() => {
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < finalText.length) {
+          textContainer.textContent += finalText[i];
+          textContainer.style.opacity = 1;
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 70); // Harf harf yazılma efekti
+    }, images.length * 2000 + 3000); // Tüm resimler + 3 saniye sonra
+  </script>
+
+</body>
+</html>
