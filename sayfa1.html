@@ -124,28 +124,8 @@
       }, index * 2000);
     });
 
-    const memoryContainer = document.getElementById("memory-text");
-    const loveEnd = document.getElementById("love-end");
-    const backBtn = document.getElementById("backBtn");
-
-    // 1. Yazı
-  /*  setTimeout(() => {
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < finalText.length) {
-          textContainer.textContent += finalText[i];
-          textContainer.style.opacity = 1;
-          i++;
-        } else {
-          clearInterval(interval);
-          // Uzun yazıya geç
-          setTimeout(typeMemory, 1000);
-        }
-      }, 70);
-    }, images.length * 2000 + 3000);
-*/
-    // 2. Uzun yazı
-    const memoryText = `İlk tanıştığımız günü hatırlıyorum da, zaman sanki o an durdu. Her şey susmuştu; kalabalıklar, sesler, düşünceler... Sadece sen vardın karşımda. Ama aslında her şey o günden çok önce başlamıştı, fark etmeden.
+    
+    const finalText = `İlk tanıştığımız günü hatırlıyorum da, zaman sanki o an durdu. Her şey susmuştu; kalabalıklar, sesler, düşünceler... Sadece sen vardın karşımda. Ama aslında her şey o günden çok önce başlamıştı, fark etmeden.
 
 Hatırlıyor musun? Kalp krizi geçirdiğim o dönemde, hastane odasında yattığımda birden kapıdan içeri girmiştin. Seni görür görmez içimde bir şey kıpırdadı. Bilinçsizce elini tutmuştum. Ne bir düşünce vardı o anda, ne bir niyet. Sadece hayata tutunur gibi tutmuştum elini… Ve sen, hiçbir şey sormadan, hiçbir neden aramadan benim elimi tutmuştun. İşte o an kaderin bizim için kurduğu cümle başladı. Sebepsizce, ama derin bir anlamla…
 
@@ -161,22 +141,22 @@ Bazen geçmişe dönmek istiyor insan. O ilk bakışı yeniden yaşamak, o heyec
 
 Ve şimdi her baktığımda gözlerine, o ilk tuttuğum eli hatırlıyorum. Sessizce ama güçlüce… Hayata tutunduğum, sana tutunduğum o anı. İyi ki... Gerçekten iyi ki…`;
 
-    function typeMemory() {
+    const memoryContainer = document.getElementById("final-text");
+    const loveEnd = document.getElementById("love-end");
+    const backBtn = document.getElementById("backBtn");
+
+    setTimeout(() => {
       let i = 0;
       const interval = setInterval(() => {
-        if (i < memoryText.length) {
-          memoryContainer.textContent += memoryText[i];
-          memoryContainer.style.opacity = 1;
+        if (i < finalText.length) {
+          textContainer.textContent += finalText[i];
+          textContainer.style.opacity = 1;
           i++;
         } else {
           clearInterval(interval);
-          setTimeout(() => {
-            loveEnd.style.display = "block";
-            backBtn.style.display = "inline-block";
-          }, 2000);
         }
-      }, 30);
-    }
+      }, 70);
+    }, images.length * 2000 + 3000);
 
     function goBack() {
       window.location.href = "devam.html";
