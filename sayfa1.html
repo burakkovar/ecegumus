@@ -37,8 +37,7 @@
       transform: scale(1);
     }
 
-    .final-text,
-    .memory-text {
+    .final-text {
       font-size: 22px;
       color: #880e4f;
       white-space: pre-wrap;
@@ -60,7 +59,7 @@
 
     .back-btn {
       display: none;
-      margin-top: 30px;
+      margin-top: 20px;
       background-color: #e91e63;
       color: white;
       padding: 12px 24px;
@@ -88,6 +87,8 @@
   <audio src="muzik2.mp3" autoplay loop></audio>
 
   <div class="gallery">
+    <!-- 20 Fotoğraf -->
+    <!-- Örnek: -->
     <img src="sayfa1/foto1.jpg">
     <img src="sayfa1/foto2.jpg">
     <img src="sayfa1/foto3.jpg">
@@ -111,12 +112,10 @@
   </div>
 
   <div id="final-text" class="final-text"></div>
-  <div id="memory-text" class="memory-text"></div>
   <div id="love-end" class="love-end">Seni hep seveceğim...</div>
   <button id="backBtn" class="back-btn" onclick="goBack()">◀️ Önceki Sayfa</button>
 
   <script>
-    // Fotoğrafları sırayla göster
     const images = document.querySelectorAll(".gallery img");
     images.forEach((img, index) => {
       setTimeout(() => {
@@ -153,13 +152,13 @@ Ve şimdi her baktığımda gözlerine, o ilk tuttuğum eli hatırlıyorum. Sess
           i++;
         } else {
           clearInterval(interval);
-          // Uzun yazıya geç
-          setTimeout(typeMemory, 1000);
+          setTimeout(() => {
+            loveEnd.style.display = "block";
+            backBtn.style.display = "inline-block";
+          }, 2000);
         }
-      }, 70);
-    }, images.length * 2000 + 3000);
-
-
+      }, 30);
+    }, images.length * 2000 + 2000);
 
     function goBack() {
       window.location.href = "devam.html";
