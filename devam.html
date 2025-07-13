@@ -131,12 +131,12 @@
   }
 
  setInterval(() => {
-  for (let i = 0; i < 3; i++) { // 3 ayrı patlama
+  for (let i = 0; i < 2; i++) { 
     const x = Math.random() * W;
     const y = Math.random() * H / 2;
     createFirework(x, y);
   }
-}, 600); 
+}, 1000); 
 
 
   function animate() {
