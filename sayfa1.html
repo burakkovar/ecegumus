@@ -44,8 +44,7 @@
       text-align: center;
       max-width: 800px;
       margin-bottom: 20px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      opacity: 1;
     }
 
     .love-end {
@@ -88,7 +87,6 @@
 
   <div class="gallery">
     <!-- 20 Fotoğraf -->
-    <!-- Örnek: -->
     <img src="sayfa1/foto1.jpg">
     <img src="sayfa1/foto2.jpg">
     <img src="sayfa1/foto3.jpg">
@@ -117,11 +115,9 @@
 
   <script>
     const images = document.querySelectorAll(".gallery img");
-    images.forEach((img, index) => {
-      setTimeout(() => {
-        img.classList.add("visible");
-      }, index * 2000);
-    });
+    const textContainer = document.getElementById("final-text");
+    const loveEnd = document.getElementById("love-end");
+    const backBtn = document.getElementById("backBtn");
 
     const finalText = `İlk tanıştığımız günü hatırlıyorum da, zaman sanki o an durdu. Her şey susmuştu; kalabalıklar, sesler, düşünceler... Sadece sen vardın karşımda. Ama aslında her şey o günden çok önce başlamıştı, fark etmeden.
 
@@ -139,26 +135,30 @@ Bazen geçmişe dönmek istiyor insan. O ilk bakışı yeniden yaşamak, o heyec
 
 Ve şimdi her baktığımda gözlerine, o ilk tuttuğum eli hatırlıyorum. Sessizce ama güçlüce… Hayata tutunduğum, sana tutunduğum o anı. İyi ki... Gerçekten iyi ki…`;
 
-    const textContainer = document.getElementById("final-text");
-    const loveEnd = document.getElementById("love-end");
-    const backBtn = document.getElementById("backBtn");
+    // Fotoğrafları sırayla göster
+    images.forEach((img, index) => {
+      setTimeout(() => {
+        img.classList.add("visible");
+      }, index * 1000);
+    });
 
+    // Yazıyı harf harf yaz
     setTimeout(() => {
       let i = 0;
       const interval = setInterval(() => {
         if (i < finalText.length) {
           textContainer.textContent += finalText[i];
-          textContainer.style.opacity = 1;
           i++;
         } else {
           clearInterval(interval);
+          // 2 saniye sonra yazı ve buton göster
           setTimeout(() => {
             loveEnd.style.display = "block";
             backBtn.style.display = "inline-block";
           }, 2000);
         }
       }, 30);
-    }, images.length * 2000 + 2000);
+    }, images.length * 1000 + 1000);
 
     function goBack() {
       window.location.href = "devam.html";
