@@ -58,12 +58,17 @@
     }
 
     .text-area {
-      padding: 40px 20px 80px;
+      width: 100%;
+      height: 50vh;
+      padding: 30px 30px 70px 30px; 
       box-sizing: border-box;
-      text-align: justify;
-      color: #880e4f;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      white-space: pre-wrap;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .end-text {
