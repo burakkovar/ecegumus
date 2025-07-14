@@ -68,6 +68,7 @@
       align-items: center;
       justify-content: flex-start;
       -webkit-overflow-scrolling: touch;
+      overflow-y: auto;
     }
 
     #text {
@@ -120,7 +121,7 @@
   <div class="content-wrapper">
     <div class="image-area" id="image-area"></div>
 
-    <div class="text-area">
+    <div class="text-area" id="text-area">
       <div id="text"></div>
       <div id="end-text" class="end-text">Ne Senden Vazgeçerim Ne De Bizden...</div>
       <button id="backBtn" class="back-btn" onclick="goBack()">◀️ Önceki Sayfa</button>
@@ -182,6 +183,7 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
     const textContainer = document.getElementById("text");
     const endText = document.getElementById("end-text");
     const backBtn = document.getElementById("backBtn");
+    const textArea = document.getElementById("text-area");
 
     function startTyping() {
       document.body.classList.add("typing-bg");
@@ -190,7 +192,7 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
         if (i < text.length) {
           textContainer.textContent += text[i];
           i++;
-          textContainer.scrollTop = textContainer.scrollHeight;
+          textArea.scrollTop = textArea.scrollHeight; // scroll otomatik en alta
         } else {
           clearInterval(interval);
           setTimeout(() => {
@@ -200,6 +202,11 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
         }
       }, 10);
     }
+
+    // Scroll olunca arka plan animasyonunu kaldır
+    textArea.addEventListener('scroll', () => {
+      document.body.classList.remove('typing-bg');
+    });
 
     function goBack() {
       window.location.href = "devam.html";
