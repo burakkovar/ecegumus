@@ -21,16 +21,20 @@
       position: relative;
       width: 100vw;
       height: 50vh;
+      box-sizing: border-box;
+      padding: 20px;
       overflow: hidden;
       border-bottom: 2px dashed #e91e63;
     }
 
     .image-area img {
       position: absolute;
-      max-width: clamp(100px, 18vw, 200px);
-      max-height: clamp(100px, 18vh, 180px);
+      max-width: clamp(110px, 22vw, 180px);
+      max-height: clamp(110px, 22vh, 180px);
       opacity: 0;
       transition: opacity 1s ease;
+      object-fit: contain;
+      pointer-events: none;
     }
 
     .image-area img.visible {
@@ -44,13 +48,13 @@
       box-sizing: border-box;
       text-align: center;
       color: #880e4f;
-      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-size: clamp(1.05rem, 2.3vw, 1.4rem);
       white-space: pre-wrap;
       overflow-y: auto;
     }
 
     .end-text {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: #e91e63;
       margin-top: 20px;
       display: none;
@@ -82,8 +86,10 @@
   </style>
 </head>
 <body>
-     <!-- 🎵 MÜZİK -->
+
+  <!-- 🎵 MÜZİK -->
   <audio src="muzik3.mp3" autoplay loop></audio>
+
   <div class="image-area" id="image-area"></div>
 
   <div class="text-area">
@@ -97,17 +103,20 @@
     const imageCount = 34;
     const usedPositions = [];
 
-    function getRandomPosition() {
+    function getRandomPosition(imgWidth, imgHeight) {
       let x, y;
       let overlap;
       let attempts = 0;
 
       do {
-        const areaWidth = window.innerWidth * 0.9;
-        const areaHeight = window.innerHeight * 0.45;
-        x = Math.floor(Math.random() * areaWidth);
-        y = Math.floor(Math.random() * areaHeight);
-        overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 130 && Math.abs(pos.y - y) < 130);
+        const padding = 20;
+        const areaWidth = imageArea.clientWidth - imgWidth - padding;
+        const areaHeight = imageArea.clientHeight - imgHeight - padding;
+
+        x = Math.floor(Math.random() * areaWidth) + padding / 2;
+        y = Math.floor(Math.random() * areaHeight) + padding / 2;
+
+        overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 100 && Math.abs(pos.y - y) < 100);
         attempts++;
         if (attempts > 100) break;
       } while (overlap);
@@ -117,7 +126,7 @@
     }
 
     function getRandomRotation() {
-      const angles = [0, 15, 20, 30, 45];
+      const angles = [0, 10, 15, 20, 30];
       return angles[Math.floor(Math.random() * angles.length)];
     }
 
@@ -130,18 +139,16 @@
       const img = document.createElement("img");
       img.src = `sayfa2/foto${i}.png`;
 
-      const { x, y } = getRandomPosition();
-      img.style.left = `${x}px`;
-      img.style.top = `${y}px`;
-      img.style.transform = `rotate(${getRandomRotation()}deg)`;
+      img.onload = () => {
+        const { x, y } = getRandomPosition(img.width, img.height);
+        img.style.left = `${x}px`;
+        img.style.top = `${y}px`;
+        img.style.transform = `rotate(${getRandomRotation()}deg)`;
+        imageArea.appendChild(img);
 
-      imageArea.appendChild(img);
-
-      setTimeout(() => img.classList.add("visible"), 100);
-
-      setTimeout(() => {
-        showImage(i + 1);
-      }, 2000);
+        setTimeout(() => img.classList.add("visible"), 100);
+        setTimeout(() => showImage(i + 1), 2000);
+      };
     }
 
     const text = `Her şeyin kırılma noktasıydı bu zamanlar…
