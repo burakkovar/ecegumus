@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Dönüm Noktaları</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
@@ -16,16 +17,16 @@
 
     .image-area {
       position: relative;
-      width: 600px;
-      height: 500px;
+      width: 100vw;
+      height: 50vh;
       overflow: hidden;
       border-bottom: 2px dashed #e91e63;
     }
 
     .image-area img {
       position: absolute;
-      max-width: 150px;
-      max-height: 150px;
+      max-width: 30vw;
+      max-height: 30vh;
       opacity: 0;
       transition: opacity 1s ease;
     }
@@ -35,18 +36,19 @@
     }
 
     .text-area {
-      width: 600px;
-      height: 500px;
+      width: 90vw;
+      height: 50vh;
       padding: 20px;
       box-sizing: border-box;
       text-align: center;
       color: #880e4f;
-      font-size: 20px;
+      font-size: 1.1rem;
       white-space: pre-wrap;
+      overflow-y: auto;
     }
 
     .end-text {
-      font-size: 24px;
+      font-size: 1.4rem;
       color: #e91e63;
       margin-top: 20px;
       display: none;
@@ -61,7 +63,7 @@
       padding: 12px 24px;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1rem;
       cursor: pointer;
       font-family: 'Segoe UI', sans-serif;
       transition: background-color 0.3s;
@@ -98,8 +100,8 @@
       let attempts = 0;
 
       do {
-        x = Math.floor(Math.random() * (600 - 160)); // 150 max width + margin
-        y = Math.floor(Math.random() * (500 - 160));
+        x = Math.floor(Math.random() * (window.innerWidth * 0.7));
+        y = Math.floor(Math.random() * (window.innerHeight * 0.45));
         overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 150 && Math.abs(pos.y - y) < 150);
         attempts++;
         if (attempts > 100) break;
@@ -134,10 +136,9 @@
 
       setTimeout(() => {
         showImage(i + 1);
-      }, 2000); // 2 saniyede bir
+      }, 2000);
     }
 
-    // Yazı alanı
     const text = `Her şeyin kırılma noktasıydı bu zamanlar…
 Bazen tek bir mesaj, tek bir cümle, her şeyi değiştirebilir.
 İçimizde birikenleri sustuk, bazen sustukça daha çok yara aldık.
