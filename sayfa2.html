@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dönüm Noktaları</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fdf6f8;
+      overflow: hidden;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    .image-container {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .image-container.visible {
+      opacity: 1;
+    }
+
+    #final-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 22px;
+      color: #880e4f;
+      white-space: pre-wrap;
+      text-align: justify;
+      max-width: 800px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="final-text"></div>
+
+  <script>
+    const totalImages = 34;
+    let currentIndex = 1;
+    const imageDuration = 2000; // 2 saniye kalır
+    const fadeDuration = 1000; // 1 saniyede geçiş
+
+    function getRandomPosition() {
+      const x = Math.random() * (window.innerWidth - 200);
+      const y = Math.random() * (window.innerHeight - 200);
+      return { x, y };
+    }
+
+    function getRandomRotation() {
+      const angles = [-30, -15, 0, 15, 30, 45];
+      return angles[Math.floor(Math.random() * angles.length)];
+    }
+
+    function showNextImage() {
+      if (currentIndex > totalImages) {
+        startFinalText();
+        return;
+      }
+
+      const img = document.createElement('img');
+      img.src = `sayfa2/foto${currentIndex}.png`;
+      img.style.width = '300px';
+      img.style.position = 'absolute';
+
+      const { x, y } = getRandomPosition();
+      const rotation = getRandomRotation();
+
+      const container = document.createElement('div');
+      container.classList.add('image-container');
+      container.style.left = `${x}px`;
+      container.style.top = `${y}px`;
+      container.style.transform = `rotate(${rotation}deg)`;
+
+      container.appendChild(img);
+      document.body.appendChild(container);
+
+      // Görünür yap
+      setTimeout(() => {
+        container.classList.add('visible');
+      }, 10);
+
+      // Kaybol ve sıradaki resmi çağır
+      setTimeout(() => {
+        container.classList.remove('visible');
+        setTimeout(() => {
+          document.body.removeChild(container);
+          currentIndex++;
+          showNextImage();
+        }, fadeDuration);
+      }, imageDuration);
+    }
+
+    function startFinalText() {
+      const finalText = `Ve tüm bu yazışmalar, kırılmalar, susmalar, geri dönüşler...
+      Hepsi bizi bugünlere taşıyan dönüm noktalarıydı.
+      Şimdi geriye dönüp baktığımda, o mesajlarda geçen her kelimenin, 
+      her suskunluğun altında yatan sevgiyi daha iyi anlıyorum.
+      Biz orada kaybolmadık... Aslında orada yeniden bulduk birbirimizi.`;
+
+      const container = document.getElementById('final-text');
+      let i = 0;
+      container.style.opacity = 1;
+
+      const interval = setInterval(() => {
+        if (i < finalText.length) {
+          container.textContent += finalText[i];
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 50);
+    }
+
+    // Sayfa yüklendiğinde başlat
+    window.onload = showNextImage;
+  </script>
+</body>
+</html>
