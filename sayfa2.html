@@ -64,7 +64,7 @@
     .text-area {
       width: 100%;
       height: 50vh;
-      padding: 30px 30px 70px 30px; 
+      padding: 30px;
       box-sizing: border-box;
       margin: 0 auto;
       display: flex;
@@ -159,7 +159,7 @@
       }
 
       const img = document.createElement("img");
-      img.src = sayfa2/foto${i}.png;
+      img.src = `sayfa2/foto${i}.png`;
 
       img.onload = () => {
         imageArea.appendChild(img);
@@ -167,24 +167,22 @@
         const imgHeight = img.offsetHeight;
 
         const { x, y } = getRandomPosition(imgWidth, imgHeight);
-        img.style.left = ${x}px;
-        img.style.top = ${y}px;
-        img.style.transform = rotate(${getRandomRotation()}deg);
+        img.style.left = `${x}px`;
+        img.style.top = `${y}px`;
+        img.style.transform = `rotate(${getRandomRotation()}deg)`;
 
         setTimeout(() => img.classList.add("visible"), 100);
-        setTimeout(() => showImage(i + 1), 500);
+        setTimeout(() => showImage(i + 1), 100);
       };
     }
 
-    const text = Birçok kez ayrılığa yaklaştık, ucundan döndük. Bazen anlık ayrıldık, ama sakinleşip durulunca, bir kez daha dönüp bakınca ayrı kalamadığımızı anladık. Çok yıprandık, çok hırpalandık, ama her defasında, daha güçlü tuttuk birbirimizin elini. Ne günlük, ne haftalık, ne aylık ne yıllıktı bizim bağımız… 
+    const text = `Birçok kez ayrılığa yaklaştık, ucundan döndük. Bazen anlık ayrıldık, ama sakinleşip durulunca, bir kez daha dönüp bakınca ayrı kalamadığımızı anladık.  Çok yıprandık, çok hırpalandık, ama her defasında, daha güçlü tuttuk birbirimizin elini. Ne günlük, ne haftalık, ne aylık ne yıllıktı bizim bağımız… Biz ömürlük bir bağa sahiptik.  
 
-Biz ömürlük bir bağa sahiptik. Ölüm bile ayıramaz bizi, öyle derin, öyle kalıcıydı sevdamız. Yeri geldi sen geri adım attın, yeri geldi ben, yeri geldi ikimiz de inat ettik, ama bir şekilde beraber kalmayı başardık.  
+Ölüm bile ayıramaz bizi, öyle derin, öyle kalıcıydı sevdamız. Yeri geldi sen geri adım attın, yeri geldi ben, yeri geldi ikimiz de inat ettik, ama bir şekilde beraber kalmayı başardık. İşte bu değil midir sevgi, aşk ve emeğin ta kendisi? 
 
-İşte bu değil midir sevgi, aşk ve emeğin ta kendisi? Emeğin en büyüğü vazgeçmemektir; biz bunu başardık sevgilim.  
+Emeğin en büyüğü vazgeçmemektir; biz bunu başardık sevgilim. Seninle sonsuzluğa yürürüm, her zorluğa varım. Yeter ki sen benle ol, ben de sende olayım, biz olalım, bir olalım.  
 
-Seninle sonsuzluğa yürürüm, her zorluğa varım. Yeter ki sen benle ol, ben de sende olayım, biz olalım, bir olalım.  
-
-Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.;
+Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
 
     const textContainer = document.getElementById("text");
     const endText = document.getElementById("end-text");
@@ -205,7 +203,7 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.;
             backBtn.style.display = "inline-block";
           }, 1000);
         }
-      }, 40);
+      }, 10);
     }
 
     function goBack() {
