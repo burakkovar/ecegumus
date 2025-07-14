@@ -37,16 +37,14 @@
       transform: scale(1);
     }
 
-    .final-text,
-    .memory-text {
+    .final-text {
       font-size: 22px;
       color: #880e4f;
       white-space: pre-wrap;
       text-align: center;
       max-width: 800px;
       margin-bottom: 20px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      opacity: 1;
     }
 
     .love-end {
@@ -88,6 +86,7 @@
   <audio src="muzik2.mp3" autoplay loop></audio>
 
   <div class="gallery">
+    <!-- 20 Fotoğraf -->
     <img src="sayfa1/foto1.jpg">
     <img src="sayfa1/foto2.jpg">
     <img src="sayfa1/foto3.jpg">
@@ -115,7 +114,6 @@
   <button id="backBtn" class="back-btn" onclick="goBack()">◀️ Önceki Sayfa</button>
 
   <script>
-    // Fotoğrafları sırayla göster
     const images = document.querySelectorAll(".gallery img");
     images.forEach((img, index) => {
       setTimeout(() => {
@@ -123,7 +121,6 @@
       }, index * 2000);
     });
 
-    
     const finalText = `İlk tanıştığımız günü hatırlıyorum da, zaman sanki o an durdu. Her şey susmuştu; kalabalıklar, sesler, düşünceler... Sadece sen vardın karşımda. Ama aslında her şey o günden çok önce başlamıştı, fark etmeden.
 
 Hatırlıyor musun? Kalp krizi geçirdiğim o dönemde, hastane odasında yattığımda birden kapıdan içeri girmiştin. Seni görür görmez içimde bir şey kıpırdadı. Bilinçsizce elini tutmuştum. Ne bir düşünce vardı o anda, ne bir niyet. Sadece hayata tutunur gibi tutmuştum elini… Ve sen, hiçbir şey sormadan, hiçbir neden aramadan benim elimi tutmuştun. İşte o an kaderin bizim için kurduğu cümle başladı. Sebepsizce, ama derin bir anlamla…
@@ -140,21 +137,25 @@ Bazen geçmişe dönmek istiyor insan. O ilk bakışı yeniden yaşamak, o heyec
 
 Ve şimdi her baktığımda gözlerine, o ilk tuttuğum eli hatırlıyorum. Sessizce ama güçlüce… Hayata tutunduğum, sana tutunduğum o anı. İyi ki... Gerçekten iyi ki…`;
 
-    const memoryContainer = document.getElementById("final-text");
+    const textContainer = document.getElementById("final-text");
     const loveEnd = document.getElementById("love-end");
     const backBtn = document.getElementById("backBtn");
 
+    // Yazı 3 saniye sonra başlamalı
     setTimeout(() => {
       let i = 0;
       const interval = setInterval(() => {
         if (i < finalText.length) {
           textContainer.textContent += finalText[i];
-          textContainer.style.opacity = 1;
           i++;
         } else {
           clearInterval(interval);
+          setTimeout(() => {
+            loveEnd.style.display = "block";
+            backBtn.style.display = "inline-block";
+          }, 1000);
         }
-      }, 70);
+      }, 30);
     }, images.length * 2000 + 3000);
 
     function goBack() {
