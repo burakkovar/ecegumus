@@ -53,17 +53,20 @@
     }
 
     .text-area {
-      width: 100vw;
-      height: 40vh;
-      padding: 20px;
-      box-sizing: border-box;
-      text-align: justify;
-      color: #880e4f;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      white-space: pre-wrap;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
+  width: 100%;
+  max-width: 800px;
+  height: 40vh;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 0 auto; /* Sayfanın ortasına alır */
+  text-align: justify; /* Yazıyı iki yana yaslar */
+  color: #880e4f;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  white-space: pre-wrap;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 
     .end-text {
       font-size: 1.5rem;
