@@ -8,7 +8,9 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100vh;
       font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
       background: linear-gradient(180deg, #fff0f5, #ffe3ec);
       transition: background 3s ease;
     }
@@ -26,8 +28,10 @@
     .content-wrapper {
       max-width: 800px;
       width: 100%;
+      height: 100vh;
       margin: 0 auto;
-      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     .image-area {
@@ -58,8 +62,21 @@
     }
 
     .text-area {
-      padding: 10px;
+      width: 100%;
+      height: 50vh;
+      padding: 30px 30px 70px 30px; 
       box-sizing: border-box;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #text {
+      max-width: 700px;
       text-align: justify;
       color: #880e4f;
       font-size: clamp(1.1rem, 2.5vw, 1.5rem);
@@ -69,13 +86,13 @@
     .end-text {
       font-size: 1.5rem;
       color: #e91e63;
-      margin-top: 40px;
+      margin-top: 20px;
       display: none;
       animation: fadeIn 2s ease forwards;
       text-align: center;
     }
 
-     .back-btn {
+    .back-btn {
       display: none;
       margin: 20px auto 0 auto;
       background-color: #e91e63;
@@ -89,11 +106,6 @@
       transition: background-color 0.3s;
       user-select: none;
     }
-
-.back-btn.show {  /* Görünür olduğunda bu sınıfı ekle */
-  display: block;
-}
-
 
     .back-btn:hover {
       background-color: #c2185b;
@@ -128,8 +140,10 @@
       const padding = 20;
       const areaWidth = imageArea.clientWidth - imgWidth - padding;
       const areaHeight = imageArea.clientHeight - imgHeight - padding;
+
       const x = Math.floor(Math.random() * areaWidth) + padding / 2;
       const y = Math.floor(Math.random() * areaHeight) + padding / 2;
+
       return { x, y };
     }
 
@@ -145,29 +159,32 @@
       }
 
       const img = document.createElement("img");
-      img.src = `sayfa2/foto${i}.png`;
+      img.src = sayfa2/foto${i}.png;
 
       img.onload = () => {
         imageArea.appendChild(img);
         const imgWidth = img.offsetWidth;
         const imgHeight = img.offsetHeight;
+
         const { x, y } = getRandomPosition(imgWidth, imgHeight);
-        img.style.left = `${x}px`;
-        img.style.top = `${y}px`;
-        img.style.transform = `rotate(${getRandomRotation()}deg)`;
+        img.style.left = ${x}px;
+        img.style.top = ${y}px;
+        img.style.transform = rotate(${getRandomRotation()}deg);
 
         setTimeout(() => img.classList.add("visible"), 100);
         setTimeout(() => showImage(i + 1), 500);
       };
     }
 
-    const text = `Birçok kez ayrılığa yaklaştık, ucundan döndük. Bazen anlık ayrıldık, ama sakinleşip durulunca, bir kez daha dönüp bakınca ayrı kalamadığımızı anladık. Çok yıprandık, çok hırpalandık, ama her defasında, daha güçlü tuttuk birbirimizin elini.
+    const text = Birçok kez ayrılığa yaklaştık, ucundan döndük. Bazen anlık ayrıldık, ama sakinleşip durulunca, bir kez daha dönüp bakınca ayrı kalamadığımızı anladık. Çok yıprandık, çok hırpalandık, ama her defasında, daha güçlü tuttuk birbirimizin elini. Ne günlük, ne haftalık, ne aylık ne yıllıktı bizim bağımız… 
 
-Ne günlük, ne haftalık, ne aylık ne yıllıktı bizim bağımız… Biz ömürlük bir bağa sahiptik. Ölüm bile ayıramaz bizi, öyle derin, öyle kalıcıydı sevdamız. Yeri geldi sen geri adım attın, yeri geldi ben, yeri geldi ikimiz de inat ettik, ama bir şekilde beraber kalmayı başardık. İşte bu değil midir sevgi, aşk ve emeğin ta kendisi?
+Biz ömürlük bir bağa sahiptik. Ölüm bile ayıramaz bizi, öyle derin, öyle kalıcıydı sevdamız. Yeri geldi sen geri adım attın, yeri geldi ben, yeri geldi ikimiz de inat ettik, ama bir şekilde beraber kalmayı başardık.  
 
-Emeğin en büyüğü vazgeçmemektir; biz bunu başardık sevgilim. Seninle sonsuzluğa yürürüm, her zorluğa varım. Yeter ki sen benle ol, ben de sende olayım, biz olalım, bir olalım.
+İşte bu değil midir sevgi, aşk ve emeğin ta kendisi? Emeğin en büyüğü vazgeçmemektir; biz bunu başardık sevgilim.  
 
-Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
+Seninle sonsuzluğa yürürüm, her zorluğa varım. Yeter ki sen benle ol, ben de sende olayım, biz olalım, bir olalım.  
+
+Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.;
 
     const textContainer = document.getElementById("text");
     const endText = document.getElementById("end-text");
@@ -185,7 +202,7 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
           clearInterval(interval);
           setTimeout(() => {
             endText.style.display = "block";
-            backBtn.style.display = "inline-block"; // Buton görünür oluyor yazıdan sonra
+            backBtn.style.display = "inline-block";
           }, 1000);
         }
       }, 40);
