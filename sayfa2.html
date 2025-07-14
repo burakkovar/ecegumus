@@ -5,22 +5,30 @@
   <title>Dönüm Noktaları</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background-color: #fff0f5;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
+      background: linear-gradient(180deg, #fff0f5, #ffe3ec);
+      transition: background 3s ease;
+    }
+
+    body.typing-bg {
+      animation: bgChange 10s infinite alternate;
+    }
+
+    @keyframes bgChange {
+      0% { background-color: #fff0f5; }
+      50% { background-color: #ffe4ec; }
+      100% { background-color: #ffe3f2; }
     }
 
     .image-area {
       position: relative;
       width: 100vw;
-      height: 50vh;
+      height: 60vh;
       box-sizing: border-box;
       padding: 20px;
       overflow: hidden;
@@ -29,26 +37,28 @@
 
     .image-area img {
       position: absolute;
-      max-width: clamp(110px, 22vw, 180px);
-      max-height: clamp(110px, 22vh, 180px);
+      max-width: clamp(160px, 30vw, 300px);
+      max-height: clamp(160px, 30vh, 250px);
       opacity: 0;
-      transition: opacity 1s ease;
+      filter: blur(4px);
+      transition: opacity 1s ease, filter 1.2s ease;
       object-fit: contain;
       pointer-events: none;
     }
 
     .image-area img.visible {
       opacity: 1;
+      filter: blur(0);
     }
 
     .text-area {
       width: 100vw;
-      height: 50vh;
+      height: 40vh;
       padding: 20px;
       box-sizing: border-box;
       text-align: center;
       color: #880e4f;
-      font-size: clamp(1.05rem, 2.3vw, 1.4rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
       white-space: pre-wrap;
       overflow-y: auto;
     }
@@ -116,7 +126,7 @@
         x = Math.floor(Math.random() * areaWidth) + padding / 2;
         y = Math.floor(Math.random() * areaHeight) + padding / 2;
 
-        overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 100 && Math.abs(pos.y - y) < 100);
+        overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 120 && Math.abs(pos.y - y) < 120);
         attempts++;
         if (attempts > 100) break;
       } while (overlap);
@@ -169,6 +179,7 @@ Bu yüzden o anlar da bizim hikâyemiz, bizim dönüm noktalarımız…`;
     const backBtn = document.getElementById("backBtn");
 
     function startTyping() {
+      document.body.classList.add("typing-bg"); // Arka plan animasyonu başlat
       let i = 0;
       const interval = setInterval(() => {
         if (i < text.length) {
