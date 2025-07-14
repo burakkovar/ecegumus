@@ -13,6 +13,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .image-area {
@@ -25,8 +27,8 @@
 
     .image-area img {
       position: absolute;
-      max-width: 30vw;
-      max-height: 30vh;
+      max-width: clamp(100px, 18vw, 200px);
+      max-height: clamp(100px, 18vh, 180px);
       opacity: 0;
       transition: opacity 1s ease;
     }
@@ -36,13 +38,13 @@
     }
 
     .text-area {
-      width: 90vw;
+      width: 100vw;
       height: 50vh;
       padding: 20px;
       box-sizing: border-box;
       text-align: center;
       color: #880e4f;
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
       white-space: pre-wrap;
       overflow-y: auto;
     }
@@ -100,9 +102,11 @@
       let attempts = 0;
 
       do {
-        x = Math.floor(Math.random() * (window.innerWidth * 0.7));
-        y = Math.floor(Math.random() * (window.innerHeight * 0.45));
-        overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 150 && Math.abs(pos.y - y) < 150);
+        const areaWidth = window.innerWidth * 0.9;
+        const areaHeight = window.innerHeight * 0.45;
+        x = Math.floor(Math.random() * areaWidth);
+        y = Math.floor(Math.random() * areaHeight);
+        overlap = usedPositions.some(pos => Math.abs(pos.x - x) < 130 && Math.abs(pos.y - y) < 130);
         attempts++;
         if (attempts > 100) break;
       } while (overlap);
@@ -112,7 +116,7 @@
     }
 
     function getRandomRotation() {
-      const angles = [0, 20, 30, 45];
+      const angles = [0, 15, 20, 30, 45];
       return angles[Math.floor(Math.random() * angles.length)];
     }
 
