@@ -25,9 +25,18 @@
       100% { background-color: #ffe3f2; }
     }
 
+    .content-wrapper {
+      max-width: 800px;
+      width: 100%;
+      height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
     .image-area {
       position: relative;
-      width: 100vw;
+      width: 100%;
       height: 60vh;
       box-sizing: border-box;
       padding: 20px;
@@ -53,20 +62,18 @@
     }
 
     .text-area {
-  width: 100%;
-  max-width: 800px;
-  height: 40vh;
-  padding: 20px;
-  box-sizing: border-box;
-  margin: 0 auto; /* Sayfanın ortasına alır */
-  text-align: justify; /* Yazıyı iki yana yaslar */
-  color: #880e4f;
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  white-space: pre-wrap;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
+      width: 100%;
+      height: 40vh;
+      padding: 20px;
+      box-sizing: border-box;
+      margin: 0 auto;
+      text-align: justify;
+      color: #880e4f;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      white-space: pre-wrap;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
 
     .end-text {
       font-size: 1.5rem;
@@ -74,11 +81,12 @@
       margin-top: 20px;
       display: none;
       animation: fadeIn 2s ease forwards;
+      text-align: center;
     }
 
     .back-btn {
       display: none;
-      margin-top: 20px;
+      margin: 20px auto 0;
       background-color: #e91e63;
       color: white;
       padding: 12px 24px;
@@ -106,29 +114,27 @@
   <!-- 🎵 MÜZİK -->
   <audio src="muzik3.mp3" autoplay loop></audio>
 
-  <div class="image-area" id="image-area"></div>
+  <div class="content-wrapper">
+    <div class="image-area" id="image-area"></div>
 
-  <div class="text-area">
-    <div id="text"></div>
-    <div id="end-text" class="end-text">Ne Senden Vazgeçerim Ne De Bizden...</div>
-    <button id="backBtn" class="back-btn" onclick="goBack()">◀️ Önceki Sayfa</button>
+    <div class="text-area">
+      <div id="text"></div>
+      <div id="end-text" class="end-text">Ne Senden Vazgeçerim Ne De Bizden...</div>
+      <button id="backBtn" class="back-btn" onclick="goBack()">◀️ Önceki Sayfa</button>
+    </div>
   </div>
 
   <script>
     const imageArea = document.getElementById("image-area");
     const imageCount = 34;
-    const usedPositions = [];
 
-    // Resimler üst üste gelebilir, sadece ekran dışına taşmasın diye sınır koyuyoruz
     function getRandomPosition(imgWidth, imgHeight) {
-      const padding = 20; // image-area paddingı da dahil
+      const padding = 20;
       const areaWidth = imageArea.clientWidth - imgWidth - padding;
       const areaHeight = imageArea.clientHeight - imgHeight - padding;
 
       const x = Math.floor(Math.random() * areaWidth) + padding / 2;
       const y = Math.floor(Math.random() * areaHeight) + padding / 2;
-
-      // Pozisyon kontrolü kaldırıldı, üst üste binebilir dedin
 
       return { x, y };
     }
@@ -148,9 +154,7 @@
       img.src = `sayfa2/foto${i}.png`;
 
       img.onload = () => {
-        // Resmi önce DOM'a ekle ki offset ölçüleri doğru alınsın
         imageArea.appendChild(img);
-
         const imgWidth = img.offsetWidth;
         const imgHeight = img.offsetHeight;
 
@@ -159,7 +163,6 @@
         img.style.top = `${y}px`;
         img.style.transform = `rotate(${getRandomRotation()}deg)`;
 
-        // Blur + opacity animasyonları
         setTimeout(() => img.classList.add("visible"), 100);
         setTimeout(() => showImage(i + 1), 2000);
       };
@@ -203,19 +206,17 @@ biz olalım, bir olalım.
 Asla bitmeyen bir masalımız olsun,  
 tıpkı biz gibi.`;
 
-
     const textContainer = document.getElementById("text");
     const endText = document.getElementById("end-text");
     const backBtn = document.getElementById("backBtn");
 
     function startTyping() {
-      document.body.classList.add("typing-bg"); // Arka plan animasyonu başlat
+      document.body.classList.add("typing-bg");
       let i = 0;
       const interval = setInterval(() => {
         if (i < text.length) {
           textContainer.textContent += text[i];
           i++;
-          // Sayfa kaydırmayı engellememek için scroll'u aşağı kaydırabiliriz:
           textContainer.scrollTop = textContainer.scrollHeight;
         } else {
           clearInterval(interval);
