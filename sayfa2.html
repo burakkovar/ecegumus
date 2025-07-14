@@ -170,22 +170,22 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
     const backBtn = document.getElementById("backBtn");
 
     function startTyping() {
-      document.body.classList.add("typing-bg");
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          textContainer.textContent += text[i];
-          i++;
-          textContainer.scrollTop = textContainer.scrollHeight;
-        } else {
-          clearInterval(interval);
-          setTimeout(() => {
-            endText.style.display = "block";
-            backBtn.style.display = "block";
-          }, 1000);
-        }
-      }, 40);
+  document.body.classList.add("typing-bg");
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      textContainer.textContent += text[i];
+      i++;
+      textContainer.scrollTop = textContainer.scrollHeight;
+    } else {
+      clearInterval(interval);
+      setTimeout(() => {
+        endText.style.display = "block";
+        backBtn.style.display = "inline-block"; // Burada kesinlikle inline-block veya block olsun
+      }, 1000);
     }
+  }, 40);
+}
 
     function goBack() {
       window.location.href = "devam.html";
