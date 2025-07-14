@@ -58,7 +58,7 @@
     }
 
     .text-area {
-      padding: 40px 20px 80px;
+      padding: 20px 20px 80px;
       box-sizing: border-box;
       text-align: justify;
       color: #880e4f;
@@ -76,7 +76,7 @@
     }
 
     .back-btn {
-      display: none;
+      display: none; /* Başlangıçta gizli */
       margin: 30px auto 0 auto;
       background-color: #e91e63;
       color: white;
@@ -88,7 +88,6 @@
       font-family: 'Segoe UI', sans-serif;
       transition: background-color 0.3s;
       user-select: none;
-      display: block;
     }
 
     .back-btn:hover {
@@ -170,22 +169,22 @@ Asla bitmeyen bir masalımız olsun, tıpkı biz gibi.`;
     const backBtn = document.getElementById("backBtn");
 
     function startTyping() {
-  document.body.classList.add("typing-bg");
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i < text.length) {
-      textContainer.textContent += text[i];
-      i++;
-      textContainer.scrollTop = textContainer.scrollHeight;
-    } else {
-      clearInterval(interval);
-      setTimeout(() => {
-        endText.style.display = "block";
-        backBtn.style.display = "inline-block"; // Burada kesinlikle inline-block veya block olsun
-      }, 1000);
+      document.body.classList.add("typing-bg");
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          textContainer.textContent += text[i];
+          i++;
+          textContainer.scrollTop = textContainer.scrollHeight;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            endText.style.display = "block";
+            backBtn.style.display = "inline-block"; // Buton görünür oluyor yazıdan sonra
+          }, 1000);
+        }
+      }, 40);
     }
-  }, 40);
-}
 
     function goBack() {
       window.location.href = "devam.html";
