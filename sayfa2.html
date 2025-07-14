@@ -7,20 +7,25 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background-color: #fdf6f8;
+      background: #fdf6f9;
       overflow: hidden;
       font-family: 'Chakra Petch', sans-serif;
+      position: relative;
+      height: 100vh;
     }
 
-    .image-container {
+    .photo {
       position: absolute;
+      width: 200px;
       opacity: 0;
-      transition: opacity 1s ease;
+      transform: scale(0.8) rotate(0deg);
+      transition: opacity 1s ease, transform 1s ease;
+      pointer-events: none;
     }
 
-    .image-container.visible {
+    .photo.visible {
       opacity: 1;
+      transform: scale(1) rotate(var(--angle));
     }
 
     #final-text {
@@ -28,11 +33,11 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      max-width: 800px;
       font-size: 22px;
       color: #880e4f;
       white-space: pre-wrap;
-      text-align: justify;
-      max-width: 800px;
+      text-align: center;
       opacity: 0;
     }
   </style>
@@ -42,72 +47,69 @@
   <div id="final-text"></div>
 
   <script>
-    const totalImages = 34;
-    let currentIndex = 1;
-    const imageDuration = 2000; // 2 saniye kalır
-    const fadeDuration = 1000; // 1 saniyede geçiş
+    const totalPhotos = 34;
+    const positions = [];
 
     function getRandomPosition() {
-      const x = Math.random() * (window.innerWidth - 200);
-      const y = Math.random() * (window.innerHeight - 200);
+      let x, y, tries = 0;
+      do {
+        x = Math.floor(Math.random() * (window.innerWidth - 220));
+        y = Math.floor(Math.random() * (window.innerHeight - 240));
+        let overlap = positions.some(pos => {
+          return Math.abs(pos.x - x) < 220 && Math.abs(pos.y - y) < 240;
+        });
+        if (!overlap) break;
+        tries++;
+      } while (tries < 100);
+      positions.push({ x, y });
       return { x, y };
     }
 
-    function getRandomRotation() {
-      const angles = [-30, -15, 0, 15, 30, 45];
+    function getRandomAngle() {
+      const angles = ["0deg", "15deg", "-15deg", "30deg", "-30deg", "45deg", "-45deg"];
       return angles[Math.floor(Math.random() * angles.length)];
     }
 
-    function showNextImage() {
-      if (currentIndex > totalImages) {
-        startFinalText();
+    function showPhotos(index = 1) {
+      if (index > totalPhotos) {
+        setTimeout(showFinalText, 1500);
         return;
       }
 
-      const img = document.createElement('img');
-      img.src = `sayfa2/foto${currentIndex}.png`;
-      img.style.width = '300px';
-      img.style.position = 'absolute';
+      const img = document.createElement("img");
+      img.src = `sayfa2/foto${index}.png`;
+      img.className = "photo";
 
       const { x, y } = getRandomPosition();
-      const rotation = getRandomRotation();
+      const angle = getRandomAngle();
 
-      const container = document.createElement('div');
-      container.classList.add('image-container');
-      container.style.left = `${x}px`;
-      container.style.top = `${y}px`;
-      container.style.transform = `rotate(${rotation}deg)`;
+      img.style.left = x + "px";
+      img.style.top = y + "px";
+      img.style.setProperty("--angle", angle);
+      document.body.appendChild(img);
 
-      container.appendChild(img);
-      document.body.appendChild(container);
-
-      // Görünür yap
       setTimeout(() => {
-        container.classList.add('visible');
-      }, 10);
-
-      // Kaybol ve sıradaki resmi çağır
-      setTimeout(() => {
-        container.classList.remove('visible');
-        setTimeout(() => {
-          document.body.removeChild(container);
-          currentIndex++;
-          showNextImage();
-        }, fadeDuration);
-      }, imageDuration);
+        img.classList.add("visible");
+        setTimeout(() => showPhotos(index + 1), 2000);
+      }, 100);
     }
 
-    function startFinalText() {
-      const finalText = `Ve tüm bu yazışmalar, kırılmalar, susmalar, geri dönüşler...
-      Hepsi bizi bugünlere taşıyan dönüm noktalarıydı.
-      Şimdi geriye dönüp baktığımda, o mesajlarda geçen her kelimenin, 
-      her suskunluğun altında yatan sevgiyi daha iyi anlıyorum.
-      Biz orada kaybolmadık... Aslında orada yeniden bulduk birbirimizi.`;
+    const finalText = `Bazen sadece bir konuşma, bir mesaj, bir cümle... 
+Her şeyi değiştirir.
 
-      const container = document.getElementById('final-text');
+Biz de öyleydik. 
+Dönüm noktalarının tam kenarında, 
+Uçurumdan döndüğümüz anlarda birbirimize tutunduk.
+
+Ve şimdi geriye dönüp baktığımda,
+Bizi ayakta tutan o mesajlar, o anılar...
+Hepsi hâlâ burada.
+Kalbimde, hafızamda, ve bu sayfada.`;
+
+    function showFinalText() {
+      const container = document.getElementById("final-text");
       let i = 0;
       container.style.opacity = 1;
-
       const interval = setInterval(() => {
         if (i < finalText.length) {
           container.textContent += finalText[i];
@@ -119,7 +121,9 @@
     }
 
     // Sayfa yüklendiğinde başlat
-    window.onload = showNextImage;
+    window.onload = () => {
+      showPhotos();
+    };
   </script>
 </body>
 </html>
