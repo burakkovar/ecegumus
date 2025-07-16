@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <title>Anılar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
   <style>
     body {
-      height: 100%;
       margin: 0;
       padding: 0;
       background: linear-gradient(180deg, #fff0f5, #ffe3ec);
@@ -50,6 +50,7 @@
       color: #880e4f;
       font-size: clamp(1.1rem, 2.5vw, 1.5rem);
       display: none;
+      white-space: pre-wrap;
     }
 
     .end-text {
@@ -84,11 +85,10 @@
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
 </head>
 <body>
 
- <!-- 🎵 MÜZİK -->
+  <!-- 🎵 MÜZİK -->
   <audio src="muzik4.mp3" autoplay loop></audio>
   
   <div class="gallery" id="gallery"></div>
@@ -114,6 +114,7 @@
       const img = document.createElement("img");
       img.src = `anılar/foto${i}.jpg`;
       gallery.appendChild(img);
+
       setTimeout(() => {
         img.classList.add("visible");
         loadImages(i + 1);
@@ -127,24 +128,22 @@ Geçmiş zaman olur ki, her karede bir parçamız kalır. Birlikte yaşadığım
 Bazı anlar vardır, bir daha geri gelmez ama hep hafızamızda yaşar. Ve bu anılar, bizi biz yapan detaylardır.`;
 
     function startTyping() {
-  let i = 0;
-  textDiv.style.display = "block"; // Yazı kutusunu göster
+      textDiv.style.display = "block";
+      let i = 0;
 
-  const interval = setInterval(() => {
-    if (i < textContent.length) {
-      textDiv.textContent += textContent[i];
-      i++;
-    } else {
-      clearInterval(interval);
-      setTimeout(() => {
-        endText.style.display = "block";
-        backBtn.style.display = "block";
-      }, 1000);
+      const interval = setInterval(() => {
+        if (i < textContent.length) {
+          textDiv.textContent += textContent[i];
+          i++;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            endText.style.display = "block";
+            backBtn.style.display = "block";
+          }, 1000);
+        }
+      }, 40);
     }
-  }, 40);
-}
-
-
 
     function goBack() {
       window.location.href = "devam.html";
