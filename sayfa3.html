@@ -7,15 +7,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(180deg, #fff0f5, #ffe3ec);
-      font-family: 'Chakra Petch', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: background 3s ease;
-    }
+  margin: 0;
+  padding: 0;
+  font-family: 'Chakra Petch', sans-serif;
+  background: linear-gradient(180deg, #fff0f5, #ffe3ec);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 3s ease;
+}
 
     @keyframes fadeBlur {
       0% { opacity: 0; filter: blur(8px); }
@@ -121,11 +124,18 @@
       }, imageDelay);
     }
 
-    const textContent = `O anların her biri içimizde bir iz bıraktı. Fotoğraflar sadece karelerden ibaret değildi; içlerinde hislerimizi, gülüşlerimizi, dokunuşlarımızı sakladık.  
+    const textContent = `O anların her biri içimizde bir iz bıraktı. Fotoğraflar sadece karelerden ibaret değildi; içlerinde hislerimizi, gülüşlerimizi, dokunuşlarımızı sakladık. Geçmiş zaman olur ki, her karede bir parçamız kalır. Birlikte yaşadığımız anılar, zaman geçse bile bizimle kalır. Bazı anlar vardır, bir daha geri gelmez ama hep hafızamızda yaşar. Ve bu anılar, bizi biz yapan detaylardır.  
   
-Geçmiş zaman olur ki, her karede bir parçamız kalır. Birlikte yaşadığımız anılar, zaman geçse bile bizimle kalır.  
+Yıllar geçti... Her yılımız ayrı bir anı, her anıysa ayrı bir hazine oldu bizim için. Birlikte yüzlerce anı biriktirdik, yüzlerce kez gülümsedik, ağladık, büyüdük, değiştik ama bir şey hep aynı kaldı: "Sen ve Ben". Ne güzel bir şeymiş insanın hayat yolculuğunda yanında en doğru insanın olması. Ne güzelmiş her günü birlikte yaşamak, sabahlara birlikte uyanmak, geceleri birlikte kapatmak.  
   
-Bazı anlar vardır, bir daha geri gelmez ama hep hafızamızda yaşar. Ve bu anılar, bizi biz yapan detaylardır.`;
+Yedinci senemize girdik... Hâlâ ilk günkü heyecanla, ilk günkü kalp çarpıntısıyla, ilk günkü masumiyetle bakıyorum sana. Ve hâlâ doyamıyorum. Her anına ortak olmak istiyorum. Derdine, neşene, gülüşüne, yorgunluğuna... Gözlerinin içine bakıp “Ben hep buradayım” demek istiyorum, her seferinde. İyi ki varsın. İyi ki benimlesin. Her zaman yanımda ol, güzelim… Sevgilim… Balım, çiçeğim, ilham kaynağım, kalbimin en güzel yanı.  
+  
+Seni sonsuzca seviyorum. Dün olduğu gibi, bugün de... Ve biliyorum, yarın da. Gelecekte nice anılarımız olsun, nice kahkahalarımız, göz göze geldiğimiz anlar, yürüdüğümüz yollar, başardığımız zorluklar… Her şey ama her şey seninle olsun. Çünkü ben sensiz hiçbir şeyi tam saymam.  
+  
+Birlikte geçmişe baktığımızda içimizi ısıtan bir film gibi izleyebileceğimiz, yaşanmış, dolu dolu anılar biriktirmeye devam edelim.  
+  
+Ve ne olursa olsun, biz hep “biz” kalalım.`;
+
 
     function startTyping() {
       textDiv.style.display = "block";
