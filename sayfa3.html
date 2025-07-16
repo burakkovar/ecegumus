@@ -127,13 +127,13 @@ Geçmiş zaman olur ki, her karede bir parçamız kalır. Birlikte yaşadığım
 Bazı anlar vardır, bir daha geri gelmez ama hep hafızamızda yaşar. Ve bu anılar, bizi biz yapan detaylardır.`;
 
     function startTyping() {
-  document.body.classList.add("typing-bg");
   let i = 0;
+  textDiv.style.display = "block"; // Yazı kutusunu göster
+
   const interval = setInterval(() => {
-    if (i < text.length) {
-      textContainer.textContent += text[i];
+    if (i < textContent.length) {
+      textDiv.textContent += textContent[i];
       i++;
-      textArea.scrollTop = textArea.scrollHeight;
     } else {
       clearInterval(interval);
       setTimeout(() => {
@@ -143,6 +143,7 @@ Bazı anlar vardır, bir daha geri gelmez ama hep hafızamızda yaşar. Ve bu an
     }
   }, 40);
 }
+
 
 
     function goBack() {
