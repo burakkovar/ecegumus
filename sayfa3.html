@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anılar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, #fff0f5, #ffe3ec);
+      font-family: 'Chakra Petch', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 3s ease;
+    }
+
+    @keyframes fadeBlur {
+      0% { opacity: 0; filter: blur(8px); }
+      100% { opacity: 1; filter: blur(0); }
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      padding: 40px 20px;
+      justify-items: center;
+    }
+
+    .gallery img {
+      width: 100%;
+      max-width: 200px;
+      opacity: 0;
+      filter: blur(8px);
+      transition: opacity 1s ease, filter 1s ease;
+    }
+
+    .gallery img.visible {
+      animation: fadeBlur 1s forwards;
+    }
+
+    .text-content {
+      max-width: 800px;
+      padding: 40px 20px;
+      text-align: justify;
+      color: #880e4f;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      display: none;
+    }
+
+    .end-text {
+      font-size: 1.5rem;
+      color: #e91e63;
+      margin-top: 30px;
+      text-align: center;
+      display: none;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .back-btn {
+      display: none;
+      margin: 20px auto 40px auto;
+      background-color: #e91e63;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: 'Segoe UI', sans-serif;
+      transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #c2185b;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="gallery" id="gallery"></div>
+  <div class="text-content" id="text"></div>
+  <div class="end-text" id="end-text">Anılar Sonsuza Kadar Bizimle Kalacak...</div>
+  <button class="back-btn" id="backBtn" onclick="goBack()">◀️ Önceki Sayfa</button>
+
+  <script>
+    const gallery = document.getElementById("gallery");
+    const textDiv = document.getElementById("text");
+    const endText = document.getElementById("end-text");
+    const backBtn = document.getElementById("backBtn");
+
+    const totalImages = 72;
+    const imageDelay = 500;
+
+    function loadImages(i = 1) {
+      if (i > totalImages) {
+        setTimeout(startTyping, 1000);
+        return;
+      }
+
+      const img = document.createElement("img");
+      img.src = `anılar/foto${i}.jpg`;
+      gallery.appendChild(img);
+      setTimeout(() => {
+        img.classList.add("visible");
+        loadImages(i + 1);
+      }, imageDelay);
+    }
+
+    const textContent = `O anların her biri içimizde bir iz bıraktı. Fotoğraflar sadece karelerden ibaret değildi; içlerinde hislerimizi, gülüşlerimizi, dokunuşlarımızı sakladık.  
+  
+Geçmiş zaman olur ki, her karede bir parçamız kalır. Birlikte yaşadığımız anılar, zaman geçse bile bizimle kalır.  
+  
+Bazı anlar vardır, bir daha geri gelmez ama hep hafızamızda yaşar. Ve bu anılar, bizi biz yapan detaylardır.`;
+
+    function startTyping() {
+      textDiv.style.display = 'block';
+      let words = textContent.split(" ");
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < words.length) {
+          textDiv.innerHTML += words[i] + " ";
+          i++;
+        } else {
+          clearInterval(interval);
+          endText.style.display = "block";
+          backBtn.style.display = "block";
+        }
+      }, 120);
+    }
+
+    function goBack() {
+      window.location.href = "devam.html";
+    }
+
+    loadImages();
+  </script>
+</body>
+</html>
