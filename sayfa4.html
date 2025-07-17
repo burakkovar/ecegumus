@@ -27,24 +27,23 @@
       box-sizing: border-box;
     }
 
-    .photo-group {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
+    @media (max-width: 768px) {
+  .photo-group {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: auto; /* Kaydırma çıkması için */
+    -webkit-overflow-scrolling: touch; /* Mobilde kaydırma için */
+  }
 
-    .photo-group img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      opacity: 0;
-      filter: blur(8px);
-      transition: opacity 1.2s ease, filter 1.2s ease;
-      user-select: none;
-    }
+  .photo-group img {
+    max-width: 100px; /* ya da uygun bir sabit genişlik */
+    width: 30vw; /* veya ekran genişliğinin %30'u */
+    height: auto;
+    flex-shrink: 0; /* Küçülmeyi engelle */
+  }
+}
 
     .photo-group img.visible {
       opacity: 1;
@@ -72,20 +71,23 @@
     }
 
     #final-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
-      animation: fadeIn 3s ease forwards;
-      user-select: none;
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(180deg, #fff, #0b3c6b);
-      color: #1a3c78;
-      overflow: hidden;
-      transition: background 3s ease;
-    }
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  animation: fadeIn 3s ease forwards;
+  user-select: none;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #fff, #0b3c6b);
+  color: #1a3c78;
+  overflow-y: auto; /* Dikey kaydırma ekle */
+  overflow-x: hidden;
+  transition: background 3s ease;
+  padding: 20px; /* kenarlardan boşluk */
+  box-sizing: border-box;
+}
 
     #continueBtn {
       background-color: #1e90ff;
