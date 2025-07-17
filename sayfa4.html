@@ -27,23 +27,24 @@
       box-sizing: border-box;
     }
 
-    @media (max-width: 768px) {
-  .photo-group {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 10px;
-    overflow-x: auto; /* Kaydırma çıkması için */
-    -webkit-overflow-scrolling: touch; /* Mobilde kaydırma için */
-  }
+    .photo-group {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
 
-  .photo-group img {
-    max-width: 100px; /* ya da uygun bir sabit genişlik */
-    width: 30vw; /* veya ekran genişliğinin %30'u */
-    height: auto;
-    flex-shrink: 0; /* Küçülmeyi engelle */
-  }
-}
+    .photo-group img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      filter: blur(8px);
+      transition: opacity 1.2s ease, filter 1.2s ease;
+      user-select: none;
+    }
 
     .photo-group img.visible {
       opacity: 1;
@@ -249,7 +250,7 @@ const groups = [
      
   { photos: [7, 8, 9], text: "Ve şimdi geldik hayallerimizin içine dokunabildiğimiz o anlara...\n\nBu üç fotoğraf diğerlerinden farklı. Henüz yaşanmadı bu anlar. Ama kalbimizde, dualarımızda, hayallerimizde defalarca yaşandı. Yapay zekaya çizdirdik belki ama o çizgilerde biz vardık. Gerçek bir gelinlik, gerçek bir damatlık içinde... Seninle yan yana. Göz göze. Kalp kalbe. Bir ömrün en özel ‘evet’ine giden yolda...\n\nNe zaman baksam bu fotoğraflara, ‘vay be’ diyorum. Nasıl da yakışıyoruz... Sanki dünya sırf bu kare için dönmüş. Gelinliğinle parlıyorsun, ben ise yanında kendimi daha güçlü, daha tamam hissediyorum. Biliyorum, bir gün bu çizimlerin yerini gerçek fotoğraflar alacak. O gün geldiğinde, bu anı duvarımıza asacağız. Ve her bakışımızda kalbimiz biraz daha umutla dolacak.\n\nYıllardır hayalini kurduğumuz o gün yaklaşıyor sevgilim... Biz bu hayaller için savaştık. Zorlandık. Sabrettik. Ama hiç vazgeçmedik. Kendimizden, sevgimizden, biz’den asla ödün vermedik. Hep bir adımda buluştuk, hep bir yürekte kaldık.\n\nBu fotoğraflar sadece birer hayal değil, aynı zamanda bir söz gibi... Gelecekteki en güzel günlerimizin habercisi. Seninle evlenmek, seninle bir yuva kurmak, aynı soyadını taşımak, aynı çatı altında uyanmak... Hepsi gerçek olacak. Çünkü biz buna inandık.\n\nVe sevgilim... Bu yolun sonunda biz varız. İnşallah biz oluruz. Ve o gün geldiğinde, dünya dursun, zaman geçmesin, çünkü o an, bizim sonsuzluğumuzun başladığı an olacak." },
   
-  { photos: [10, 11, 12], text: "Ve işte... Geldik bu yolculuğun en anlamlı, en mucizevi duraklarından birine.\n\nBu üç karede, biz artık sadece iki kişi değiliz. Sen bir anne, ben bir baba... Gözlerinde kocaman bir huzur, kalbimizde tarifsiz bir heyecan.\n\nBu fotoğraflar belki henüz bir hayalden ibaret, belki sadece yapay zekanın çizgileriyle oluştu. Ama o çizgilerde bizim yıllardır kurduğumuz hayaller var. O hayaller ki, bazen geceleri yıldızlara bakarken konuştuğumuz isimler... ‘Kız olursa şu olsun, erkek olursa bu...’ Bazen bir sokakta yürürken elimizi sıkan bir çocuk gördüğümüzde içimizden geçen o sıcaklık... Ve bazen sadece göz göze gelip hiçbir şey söylemeden, ama aynı şeyi hissettiğimiz anlar...\n\nBiz bir gün gerçekten anne ve baba olacağız. Vakti var, evleneceğiz önce... Sonra hayat bize minicik bir kalp daha armağan edecek. Bizden bir parça... Senin güzelliğini, benim bakışımı taşıyan... Belki yaramaz, belki çok uslu... Ama kesinlikle çok sevgiyle büyütülecek.\nBen inanıyorum sevgilim, biz bu işi çok güzel yaparız. Çünkü biz önce birbirimizin en yakın arkadaşı olduk... Sonra dost, sırdaş, sevgili... Şimdi de anne-baba olmaya hazırlanan iki yürek olduk. Aşk ve sadakat bağıyla öyle sıkı bağlandık ki birbirimize, dünyanın en güzel çocuğu bile bu sevginin üstüne doğacak.\n\nBu hayal, gün gelecek gerçek olacak. Sen o güzel karnınla yanımda olacaksın, ben sabahlara kadar senin ve onun başında... Minik kalp atışlarını ilk duyduğumuzda gözlerimize dolan yaşla birlikte ‘başardık’ diyeceğiz.\n\nVe biz… Sadece sevgili değil, artık bir aile olacağız. Büyük bir sevginin, derin bir sabrın ve sonsuz bir inancın meyvesiyle...\n\nİnşallah sevgilim... O günleri de göreceğiz. Ve bu defa yapay zekanın değil, hayatın objektifinden çıkan gerçek fotoğraflarla bakacağız yüzümüze. ‘İyi ki’ diyeceğiz… İyi ki sen, iyi ki ben, iyi ki biz..." }
+  { photos: [10, 11, 12], text: "Ve işte... Geldik bu yolculuğun en anlamlı, en mucizevi duraklarından birine.\n\nBu üç karede, biz artık sadece iki kişi değiliz. Sen bir anne, ben bir baba... Gözlerinde kocaman bir huzur, kalbimizde tarifsiz bir heyecan.\n\nBu fotoğraflar belki henüz bir hayalden ibaret, belki sadece yapay zekanın çizgileriyle oluştu. Ama o çizgilerde bizim yıllardır kurduğumuz hayaller var. O hayaller ki, bazen geceleri yıldızlara bakarken konuştuğumuz isimler... ‘Kız olursa şu olsun, erkek olursa bu...’ Bazen bir sokakta yürürken elimizi sıkan bir çocuk gördüğümüzde içimizden geçen o sıcaklık... Ve bazen sadece göz göze gelip hiçbir şey söylemeden, ama aynı şeyi hissettiğimiz anlar...\n\nBiz bir gün gerçekten anne ve baba olacağız. Vakti var, evleneceğiz önce... Sonra hayat bize minicik bir kalp daha armağan edecek. Bizden bir parça... Senin güzelliğini, benim bakışımı taşıyan... Belki yaramaz, belki çok uslu... Ama kesinlikle çok sevgiyle büyütülecek.\n\nBen inanıyorum sevgilim, biz bu işi çok güzel yaparız. Çünkü biz önce birbirimizin en yakın arkadaşı olduk... Sonra dost, sırdaş, sevgili... Şimdi de anne-baba olmaya hazırlanan iki yürek olduk. Aşk ve sadakat bağıyla öyle sıkı bağlandık ki birbirimize, dünyanın en güzel çocuğu bile bu sevginin üstüne doğacak.\n\nBu hayal, gün gelecek gerçek olacak. Sen o güzel karnınla yanımda olacaksın, ben sabahlara kadar senin ve onun başında... Minik kalp atışlarını ilk duyduğumuzda gözlerimize dolan yaşla birlikte ‘başardık’ diyeceğiz.\n\nVe biz… Sadece sevgili değil, artık bir aile olacağız. Büyük bir sevginin, derin bir sabrın ve sonsuz bir inancın meyvesiyle...\n\nİnşallah sevgilim... O günleri de göreceğiz. Ve bu defa yapay zekanın değil, hayatın objektifinden çıkan gerçek fotoğraflarla bakacağız yüzümüze. ‘İyi ki’ diyeceğiz… İyi ki sen, iyi ki ben, iyi ki biz..." }
 ];
 
 
@@ -297,20 +298,20 @@ function showGroup(index) {
   imgs.forEach((img, i) => {
     setTimeout(() => {
       img.classList.add('visible');
-    }, i * 1000);
+    }, i * 800);
   });
 
-  const totalImgTime = imgs.length * 1000 + 200;
+  const totalImgTime = imgs.length * 800 + 200;
 
   setTimeout(() => {
     textGroupEl.classList.add('visible');
     typeText(groups[index].text, textGroupEl, () => {
-      // Yazı tamamen bittikten sonra 5 saniye bekle ve sonra geçiş yap
+      // Yazı tamamen bittikten sonra 2 saniye bekle ve sonra geçiş yap
       setTimeout(() => {
         imgs.forEach(img => img.classList.remove('visible'));
         textGroupEl.classList.remove('visible');
-        setTimeout(() => showGroup(index + 1), 1000); // geçiş için 1 saniye daha ekle
-      }, 3000); // yazıdan sonra bekleme süresi
+        setTimeout(() => showGroup(index + 1), 800); // geçiş için 1 saniye daha ekle
+      }, 2000); // yazıdan sonra bekleme süresi
     });
   }, totalImgTime);
 }
