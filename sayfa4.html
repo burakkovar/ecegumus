@@ -54,6 +54,15 @@
       opacity: 0;
       transition: opacity 1.2s ease;
       user-select: none;
+      /* İki yana yaslama */
+      text-align: justify;
+      /* Son satırı sola hizala */
+      text-align-last: left;
+      /* Harf aralıkları ve satır yüksekliği */
+      letter-spacing: 0.05em;
+      line-height: 1.6;
+      padding: 0 10px;
+      white-space: pre-wrap; /* satır sonlarında kırılma için */
     }
 
     .text-group.visible {
@@ -67,6 +76,14 @@
       gap: 40px;
       animation: fadeIn 3s ease forwards;
       user-select: none;
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      /* Beyazdan degradeye arka plan */
+      background: linear-gradient(180deg, #fff, #0b3c6b);
+      color: #1a3c78;
+      overflow: hidden;
+      transition: background 3s ease;
     }
 
     #continueBtn {
@@ -81,6 +98,7 @@
       font-weight: 700;
       box-shadow: 0 0 20px #1e90ff;
       transition: background-color 0.4s ease, box-shadow 0.4s ease;
+      z-index: 10;
     }
 
     #continueBtn:hover {
@@ -88,21 +106,8 @@
       box-shadow: 0 0 30px #1070cc;
     }
 
-    /* Son sayfa görsel efektleri */
-    #final-screen .stars {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, #65aaff 15%, transparent 70%), 
-                  radial-gradient(circle at 70% 80%, #7fcfff 10%, transparent 60%);
-      opacity: 0.7;
-      animation: pulse 5s ease-in-out infinite;
-      z-index: -1;
-    }
-
     #final-screen .glow-text {
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 700;
       color: #a3d1ff;
       text-shadow:
@@ -111,30 +116,117 @@
         0 0 30px #5a9eff,
         0 0 40px #5a9eff;
       animation: glow 3s ease-in-out infinite alternate;
+      z-index: 10;
+      margin-top: 30vh;
+      text-align: center;
+      padding: 0 20px;
     }
 
+    /* Animasyonlar */
     @keyframes fadeIn {
       from {opacity: 0;}
       to {opacity: 1;}
     }
 
-    @keyframes pulse {
-      0%, 100% {opacity: 0.7;}
-      50% {opacity: 1;}
+    @keyframes glow {
+      0% {
+        text-shadow:
+          0 0 10px #a3d1ff,
+          0 0 20px #6cb3ff,
+          0 0 30px #5a9eff,
+          0 0 40px #5a9eff;
+      }
+      100% {
+        text-shadow:
+          0 0 15px #d0e7ff,
+          0 0 25px #9ecfff,
+          0 0 35px #8ab8ff,
+          0 0 50px #7db0ff;
+      }
     }
 
-    @keyframes glow {
-      0% {text-shadow:
-        0 0 10px #a3d1ff,
-        0 0 20px #6cb3ff,
-        0 0 30px #5a9eff,
-        0 0 40px #5a9eff;}
-      100% {text-shadow:
-        0 0 15px #d0e7ff,
-        0 0 25px #9ecfff,
-        0 0 35px #8ab8ff,
-        0 0 50px #7db0ff;}
+
+    /* Yıldızlar */
+    .star {
+      position: fixed;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 5;
+      animation-timing-function: linear;
     }
+    .star.slow {
+      width: 2px;
+      height: 2px;
+      animation-name: star-move-slow;
+      animation-duration: 50s;
+      animation-iteration-count: infinite;
+    }
+    .star.medium {
+      width: 2.5px;
+      height: 2.5px;
+      animation-name: star-move-medium;
+      animation-duration: 35s;
+      animation-iteration-count: infinite;
+    }
+    .star.fast {
+      width: 3px;
+      height: 3px;
+      animation-name: star-move-fast;
+      animation-duration: 20s;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes star-move-slow {
+      0% {transform: translateY(100vh);}
+      100% {transform: translateY(-150vh);}
+    }
+    @keyframes star-move-medium {
+      0% {transform: translateY(100vh);}
+      100% {transform: translateY(-200vh);}
+    }
+    @keyframes star-move-fast {
+      0% {transform: translateY(100vh);}
+      100% {transform: translateY(-250vh);}
+    }
+
+    /* Kalpler */
+    .heart {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle at center, #ff4d6d 70%, #a7002a 100%);
+      clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 30%, 85% 50%, 75% 70%, 50% 90%, 25% 70%, 15% 50%, 15% 30%, 25% 15%, 39% 15%);
+      animation: heart-pulse 3s ease-in-out infinite;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    @keyframes heart-pulse {
+      0%, 100% {transform: scale(1);}
+      50% {transform: scale(1.2);}
+    }
+
+    /* Baloncuklar */
+    .bubble {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle at center, #90cfff 70%, #317abb 100%);
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: bubble-rise 6s linear infinite;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @keyframes bubble-rise {
+      0% {transform: translateY(100vh) scale(1);}
+      100% {transform: translateY(-20vh) scale(0.5);}
+    }
+
   </style>
 </head>
 <body>
@@ -180,12 +272,29 @@
 
   let currentGroup = 0;
 
+  // Harf harf yazdırma fonksiyonu
+  function typeText(text, element, callback) {
+    element.textContent = '';
+    let i = 0;
+    function addChar() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(addChar, 40);
+      } else {
+        if(callback) callback();
+      }
+    }
+    addChar();
+  }
+
   function showGroup(index) {
-    if(index >= groups.length) {
-      // Tüm gruplar gösterildi, final ekran göster
+    if (index >= groups.length) {
+      // Final ekranı göster
       displayArea.style.display = 'none';
-      document.body.style.background = "linear-gradient(135deg, #0b3c6b, #1a5ea8)";
+      document.body.style.background = "linear-gradient(180deg, #fff, #0b3c6b)";
       finalScreen.style.display = 'flex';
+      createDecorations();
       return;
     }
 
@@ -202,33 +311,85 @@
 
     const imgs = photoGroupEl.querySelectorAll('img');
 
-    // Fotoğrafları tek tek yavaşça sırayla göster
+    // Fotoğrafları sırayla göster
     imgs.forEach((img, i) => {
       setTimeout(() => {
         img.classList.add('visible');
-      }, i * 1000); // 1 saniye aralık
+      }, i * 1000);
     });
 
-    // Yazıyı fotoğraflar görünmeye başladıktan sonra 2 saniye sonra göster
+    // Yazıyı fotoğraflar görünmeye başladıktan sonra harf harf yazdır
     setTimeout(() => {
-      textGroupEl.textContent = groups[index].text;
-      textGroupEl.classList.add('visible');
-    }, imgs.length * 1000 + 500);
+      typeText(groups[index].text, textGroupEl, () => {
+        textGroupEl.classList.add('visible');
+      });
+    }, imgs.length * 1000 + 200);
 
-    // 7 saniye sonra grup kaybolup diğer grup başlasın
+    // 8 saniye sonra fotoğraf ve yazıları gizle, sonraki gruba geç
     setTimeout(() => {
       imgs.forEach(img => img.classList.remove('visible'));
       textGroupEl.classList.remove('visible');
 
-      // 2 saniye bekleyip sonraki grup
       setTimeout(() => {
         showGroup(index + 1);
       }, 2000);
-    }, 7000);
+    }, 8000);
   }
 
   function goContinue() {
     window.location.href = 'devam.html';
+  }
+
+  // Son sayfa dekorasyonları: yıldızlar, kalpler, baloncuklar
+  function createDecorations() {
+    const final = document.getElementById('final-screen');
+
+    // Yıldızlar (köşelere ve rastgele yerlere)
+    for(let i=0; i<40; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+
+      // Farklı hız ve boyut
+      const speedClass = i % 3 === 0 ? 'slow' : (i % 3 === 1 ? 'medium' : 'fast');
+      star.classList.add(speedClass);
+
+      // Rastgele pozisyon (köşelere yakın olacak şekilde)
+      const posX = Math.random() * window.innerWidth;
+      const posY = Math.random() * window.innerHeight;
+
+      star.style.left = posX + 'px';
+      star.style.top = posY + 'px';
+
+      final.appendChild(star);
+    }
+
+    // Kalpler rastgele konumda ve animasyonlu
+    for(let i=0; i<15; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = (Math.random() * window.innerWidth) + 'px';
+      heart.style.top = (Math.random() * window.innerHeight) + 'px';
+
+      // Animasyon süresini biraz değiştir
+      heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+
+      final.appendChild(heart);
+    }
+
+    // Baloncuklar yukarı doğru hareket
+    for(let i=0; i<20; i++) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      bubble.style.left = (Math.random() * window.innerWidth) + 'px';
+      // Başlangıç y konumu biraz aşağıda
+      bubble.style.top = (window.innerHeight + Math.random() * 100) + 'px';
+      // Farklı animasyon süreleri
+      bubble.style.animationDuration = (5 + Math.random() * 5) + 's';
+      // Rastgele animasyon gecikmesi
+      bubble.style.animationDelay = (Math.random() * 5) + 's';
+
+      final.appendChild(bubble);
+    }
   }
 
   showGroup(currentGroup);
