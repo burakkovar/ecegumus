@@ -47,11 +47,14 @@
 /* Mobil uyum için */
 @media (max-width: 768px) {
   .photo-group {
-    flex-wrap: nowrap;
     flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
+
 
 
     .photo-group img.visible {
