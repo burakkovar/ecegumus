@@ -28,34 +28,23 @@
     }
 
     .photo-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
 
-.photo-group img {
-  width: 30%;
-  max-width: 120px;
-  height: auto;
-  border-radius: 10px;
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-
-/* Mobil uyum için */
-@media (max-width: 768px) {
-  .photo-group {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-
+    .photo-group img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      filter: blur(8px);
+      transition: opacity 1.2s ease, filter 1.2s ease;
+      user-select: none;
+    }
 
     .photo-group img.visible {
       opacity: 1;
@@ -297,7 +286,7 @@ function showGroup(index) {
 
   groups[index].photos.forEach(num => {
     const img = document.createElement('img');
-    img.src = `hayal/foto${num}.jpg`;
+    img.src = hayal/foto${num}.jpg;
     photoGroupEl.appendChild(img);
   });
 
