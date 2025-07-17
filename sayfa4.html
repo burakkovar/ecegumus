@@ -298,17 +298,21 @@ function showGroup(index) {
     }, i * 1000);
   });
 
-  setTimeout(() => {
-    textGroupEl.classList.add('visible');
-    typeText(groups[index].text, textGroupEl);
-  }, imgs.length * 1000 + 200);
+  const totalImgTime = imgs.length * 1000 + 200;
 
   setTimeout(() => {
-    imgs.forEach(img => img.classList.remove('visible'));
-    textGroupEl.classList.remove('visible');
-    setTimeout(() => showGroup(index + 1), 2000);
-  }, 8000);
+    textGroupEl.classList.add('visible');
+    typeText(groups[index].text, textGroupEl, () => {
+      // Yazı tamamen bittikten sonra 5 saniye bekle ve sonra geçiş yap
+      setTimeout(() => {
+        imgs.forEach(img => img.classList.remove('visible'));
+        textGroupEl.classList.remove('visible');
+        setTimeout(() => showGroup(index + 1), 1000); // geçiş için 1 saniye daha ekle
+      }, 5000); // yazıdan sonra bekleme süresi
+    });
+  }, totalImgTime);
 }
+
 
 function goContinue() {
   window.location.href = 'devam.html';
