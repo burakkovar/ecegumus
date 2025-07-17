@@ -9,7 +9,7 @@
     body {
       margin: 0; padding: 0;
       font-family: 'Chakra Petch', sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      background: linear-gradient(135deg, #0a2342, #2b5876);
       color: white;
       display: flex;
       flex-direction: column;
@@ -19,23 +19,26 @@
       overflow: hidden;
       text-align: center;
       padding: 20px;
+      transition: background 2s ease;
     }
 
     .photo-group {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
+      gap: 25px;
+      margin-bottom: 30px;
       flex-wrap: wrap;
     }
 
     .photo-group img {
-      max-width: 150px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      max-width: 300px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
       opacity: 0;
-      filter: blur(6px);
-      transition: opacity 1s ease, filter 1s ease;
+      filter: blur(8px);
+      transition: opacity 1.2s ease, filter 1.2s ease;
+      user-select: none;
     }
 
     .photo-group img.visible {
@@ -44,12 +47,13 @@
     }
 
     .text-group {
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
       max-width: 800px;
-      margin-bottom: 40px;
-      min-height: 80px; /* yazı sabit yükseklik */
+      margin-bottom: 50px;
+      min-height: 100px;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1.2s ease;
+      user-select: none;
     }
 
     .text-group.visible {
@@ -60,40 +64,93 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 30px;
+      gap: 40px;
+      animation: fadeIn 3s ease forwards;
+      user-select: none;
     }
 
     #continueBtn {
-      background-color: #fff;
-      color: #2575fc;
+      background-color: #1e90ff;
+      color: white;
       border: none;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border-radius: 30px;
+      padding: 18px 40px;
+      font-size: 1.3rem;
+      border-radius: 40px;
       cursor: pointer;
       font-family: 'Chakra Petch', sans-serif;
       font-weight: 700;
-      box-shadow: 0 0 10px #fff;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      box-shadow: 0 0 20px #1e90ff;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
     }
 
     #continueBtn:hover {
-      background-color: #2575fc;
-      color: white;
-      box-shadow: none;
+      background-color: #1070cc;
+      box-shadow: 0 0 30px #1070cc;
+    }
+
+    /* Son sayfa görsel efektleri */
+    #final-screen .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #65aaff 15%, transparent 70%), 
+                  radial-gradient(circle at 70% 80%, #7fcfff 10%, transparent 60%);
+      opacity: 0.7;
+      animation: pulse 5s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    #final-screen .glow-text {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #a3d1ff;
+      text-shadow:
+        0 0 10px #a3d1ff,
+        0 0 20px #6cb3ff,
+        0 0 30px #5a9eff,
+        0 0 40px #5a9eff;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes pulse {
+      0%, 100% {opacity: 0.7;}
+      50% {opacity: 1;}
+    }
+
+    @keyframes glow {
+      0% {text-shadow:
+        0 0 10px #a3d1ff,
+        0 0 20px #6cb3ff,
+        0 0 30px #5a9eff,
+        0 0 40px #5a9eff;}
+      100% {text-shadow:
+        0 0 15px #d0e7ff,
+        0 0 25px #9ecfff,
+        0 0 35px #8ab8ff,
+        0 0 50px #7db0ff;}
     }
   </style>
 </head>
 <body>
 
+  <!-- 🎵 MÜZİK -->
+  <audio src="muzik5.mp3" autoplay loop></audio>
+  
   <div id="display-area">
     <div class="photo-group" id="photoGroup"></div>
     <div class="text-group" id="textGroup"></div>
   </div>
 
   <div id="final-screen">
-    <div style="font-size:2rem;">Hayallerimize Yolculuk...</div>
-    <button id="continueBtn" onclick="goContinue()">Devam</button>
+    <div class="stars"></div>
+    <div class="glow-text">Hayallerimize Yolculuk...</div>
+    <button id="continueBtn" onclick="goContinue()">◀️ Önceki Sayfa</button>
   </div>
 
 <script>
@@ -125,13 +182,10 @@
 
   function showGroup(index) {
     if(index >= groups.length) {
-      // Tüm gruplar gösterildi, boş ekran ve buton göster
+      // Tüm gruplar gösterildi, final ekran göster
       displayArea.style.display = 'none';
+      document.body.style.background = "linear-gradient(135deg, #0b3c6b, #1a5ea8)";
       finalScreen.style.display = 'flex';
-      setTimeout(() => {
-        // Butonu aktif hale getir
-        document.getElementById('continueBtn').style.display = 'inline-block';
-      }, 500); // hemen veya istersen gecikmeli
       return;
     }
 
@@ -139,38 +193,38 @@
     textGroupEl.textContent = '';
     textGroupEl.classList.remove('visible');
 
-    // Fotoğrafları ekle, görünmez başlangıçta
+    // Fotoğrafları ekle, başta görünmez
     groups[index].photos.forEach(num => {
       const img = document.createElement('img');
       img.src = `hayal/foto${num}.jpg`;
       photoGroupEl.appendChild(img);
     });
 
-    // Fotoğrafları net ve görünür yapmak için sıralı animasyon
     const imgs = photoGroupEl.querySelectorAll('img');
+
+    // Fotoğrafları tek tek yavaşça sırayla göster
     imgs.forEach((img, i) => {
       setTimeout(() => {
         img.classList.add('visible');
-      }, i * 500);
+      }, i * 1000); // 1 saniye aralık
     });
 
-    // Yazıyı fotoğraflar çıkmaya başladıktan 1.5 saniye sonra göster
+    // Yazıyı fotoğraflar görünmeye başladıktan sonra 2 saniye sonra göster
     setTimeout(() => {
       textGroupEl.textContent = groups[index].text;
       textGroupEl.classList.add('visible');
-    }, 1500);
+    }, imgs.length * 1000 + 500);
 
-    // 5 saniye sonra grup kaybolacak, sonraki grup gösterilecek
+    // 7 saniye sonra grup kaybolup diğer grup başlasın
     setTimeout(() => {
-      // Fotoğrafları ve yazıyı gizle
       imgs.forEach(img => img.classList.remove('visible'));
       textGroupEl.classList.remove('visible');
 
-      // Küçük bir gecikme sonrası sonraki grup
+      // 2 saniye bekleyip sonraki grup
       setTimeout(() => {
         showGroup(index + 1);
-      }, 500);
-    }, 5000);
+      }, 2000);
+    }, 7000);
   }
 
   function goContinue() {
