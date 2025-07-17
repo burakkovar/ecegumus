@@ -6,33 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet" />
   <style>
-    body {
-      margin: 0; padding: 0;
+    html, body {
+      margin: 0;
+      padding: 0;
       font-family: 'Chakra Petch', sans-serif;
       background: linear-gradient(135deg, #0a2342, #2b5876);
       color: white;
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
+      justify-content: flex-start;
       text-align: center;
       padding: 20px;
-      transition: background 2s ease;
+      box-sizing: border-box;
     }
 
     .photo-group {
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-bottom: 30px;
       flex-wrap: wrap;
+      margin-bottom: 30px;
     }
 
     .photo-group img {
-      max-width: 300px;
       width: 100%;
+      max-width: 300px;
       border-radius: 16px;
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
       opacity: 0;
@@ -140,35 +145,31 @@
       }
     }
 
-    .star {
+    .star, .heart, .bubble {
       position: fixed;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .star {
       background: white;
       border-radius: 50%;
       opacity: 0.8;
-      pointer-events: none;
-      z-index: 5;
-      animation-timing-function: linear;
     }
+
     .star.slow {
-      width: 2px;
-      height: 2px;
-      animation-name: star-move-slow;
-      animation-duration: 50s;
-      animation-iteration-count: infinite;
+      width: 2px; height: 2px;
+      animation: star-move-slow 50s linear infinite;
     }
+
     .star.medium {
-      width: 2.5px;
-      height: 2.5px;
-      animation-name: star-move-medium;
-      animation-duration: 35s;
-      animation-iteration-count: infinite;
+      width: 2.5px; height: 2.5px;
+      animation: star-move-medium 35s linear infinite;
     }
+
     .star.fast {
-      width: 3px;
-      height: 3px;
-      animation-name: star-move-fast;
-      animation-duration: 20s;
-      animation-iteration-count: infinite;
+      width: 3px; height: 3px;
+      animation: star-move-fast 20s linear infinite;
     }
 
     @keyframes star-move-slow {
@@ -185,15 +186,11 @@
     }
 
     .heart {
-      position: fixed;
-      width: 30px;
-      height: 30px;
+      width: 30px; height: 30px;
       background: radial-gradient(circle at center, #ff4d6d 70%, #a7002a 100%);
       clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 30%, 85% 50%, 75% 70%, 50% 90%, 25% 70%, 15% 50%, 15% 30%, 25% 15%, 39% 15%);
       animation: heart-pulse 3s ease-in-out infinite;
       opacity: 0.8;
-      pointer-events: none;
-      z-index: 6;
     }
 
     @keyframes heart-pulse {
@@ -202,15 +199,11 @@
     }
 
     .bubble {
-      position: fixed;
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       background: radial-gradient(circle at center, #90cfff 70%, #317abb 100%);
       border-radius: 50%;
       opacity: 0.7;
       animation: bubble-rise 6s linear infinite;
-      pointer-events: none;
-      z-index: 4;
     }
 
     @keyframes bubble-rise {
@@ -218,12 +211,23 @@
       100% {transform: translateY(-20vh) scale(0.5);}
     }
 
+    @media (max-width: 768px) {
+      .photo-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .photo-group img {
+        max-width: 90%;
+      }
+    }
+
   </style>
 </head>
 <body>
 
   <audio src="muzik5.mp3" autoplay loop></audio>
-  
+
   <div id="display-area">
     <div class="photo-group" id="photoGroup"></div>
     <div class="text-group" id="textGroup"></div>
@@ -236,147 +240,107 @@
   </div>
 
 <script>
-  const groups = [
-    {
-      photos: [1, 2, 3],
-      text: "İlk hayallerimiz başlıyor; umut dolu, parlak ve heyecanlı."
-    },
-    {
-      photos: [4, 5, 6],
-      text: "Yolumuzda yürürken hayallerimiz büyüyor, şekilleniyor."
-    },
-    {
-      photos: [7, 8, 9],
-      text: "Zorluklar olsa da, her hayal daha da anlam kazanıyor."
-    },
-    {
-      photos: [10, 11, 12],
-      text: "Ve sonunda, hayallerimiz gerçeğe dönüşüyor, birlikte."
-    }
-  ];
+const groups = [
+  { photos: [1, 2, 3], text: "İlk hayallerimiz başlıyor; umut dolu, parlak ve heyecanlı." },
+  { photos: [4, 5, 6], text: "Yolumuzda yürürken hayallerimiz büyüyor, şekilleniyor." },
+  { photos: [7, 8, 9], text: "Zorluklar olsa da, her hayal daha da anlam kazanıyor." },
+  { photos: [10, 11, 12], text: "Ve sonunda, hayallerimiz gerçeğe dönüşüyor, birlikte." }
+];
 
-  const photoGroupEl = document.getElementById('photoGroup');
-  const textGroupEl = document.getElementById('textGroup');
-  const displayArea = document.getElementById('display-area');
-  const finalScreen = document.getElementById('final-screen');
+const photoGroupEl = document.getElementById('photoGroup');
+const textGroupEl = document.getElementById('textGroup');
+const displayArea = document.getElementById('display-area');
+const finalScreen = document.getElementById('final-screen');
+let currentGroup = 0;
 
-  let currentGroup = 0;
+function typeText(text, element, callback) {
+  element.textContent = '';
+  let i = 0;
+  function addChar() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(addChar, 60);
+    } else if (callback) callback();
+  }
+  addChar();
+}
 
-  // Harf harf yazdırma fonksiyonu
-  function typeText(text, element, callback) {
-    element.textContent = '';
-    let i = 0;
-    function addChar() {
-      if (i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
-        setTimeout(addChar, 60); // 60 ms aralık
-      } else {
-        if(callback) callback();
-      }
-    }
-    addChar();
+function showGroup(index) {
+  if (index >= groups.length) {
+    displayArea.style.display = 'none';
+    document.body.style.background = "linear-gradient(180deg, #fff, #0b3c6b)";
+    finalScreen.style.display = 'flex';
+    createDecorations();
+    return;
   }
 
-  function showGroup(index) {
-    if (index >= groups.length) {
-      // Final ekranı göster
-      displayArea.style.display = 'none';
-      document.body.style.background = "linear-gradient(180deg, #fff, #0b3c6b)";
-      finalScreen.style.display = 'flex';
-      createDecorations();
-      return;
-    }
+  photoGroupEl.innerHTML = '';
+  textGroupEl.textContent = '';
+  textGroupEl.classList.remove('visible');
 
-    photoGroupEl.innerHTML = '';
-    textGroupEl.textContent = '';
+  groups[index].photos.forEach(num => {
+    const img = document.createElement('img');
+    img.src = `hayal/foto${num}.jpg`;
+    photoGroupEl.appendChild(img);
+  });
+
+  const imgs = photoGroupEl.querySelectorAll('img');
+
+  imgs.forEach((img, i) => {
+    setTimeout(() => {
+      img.classList.add('visible');
+    }, i * 1000);
+  });
+
+  setTimeout(() => {
+    textGroupEl.classList.add('visible');
+    typeText(groups[index].text, textGroupEl);
+  }, imgs.length * 1000 + 200);
+
+  setTimeout(() => {
+    imgs.forEach(img => img.classList.remove('visible'));
     textGroupEl.classList.remove('visible');
+    setTimeout(() => showGroup(index + 1), 2000);
+  }, 8000);
+}
 
-    groups[index].photos.forEach(num => {
-      const img = document.createElement('img');
-      img.src = `hayal/foto${num}.jpg`;
-      photoGroupEl.appendChild(img);
-    });
+function goContinue() {
+  window.location.href = 'devam.html';
+}
 
-    const imgs = photoGroupEl.querySelectorAll('img');
-
-    imgs.forEach((img, i) => {
-      setTimeout(() => {
-        img.classList.add('visible');
-      }, i * 1000);
-    });
-
-    setTimeout(() => {
-      textGroupEl.classList.add('visible'); // Yazıyı önce görünür yapıyoruz
-      typeText(groups[index].text, textGroupEl);
-    }, imgs.length * 1000 + 200);
-
-    setTimeout(() => {
-      imgs.forEach(img => img.classList.remove('visible'));
-      textGroupEl.classList.remove('visible');
-
-      setTimeout(() => {
-        showGroup(index + 1);
-      }, 2000);
-    }, 8000);
-  }
-
-  function goContinue() {
-    window.location.href = 'devam.html';
-  }
-
-  function createDecorations() {
+function createDecorations() {
   const final = document.getElementById('final-screen');
-
-  // 80 yıldız
   for(let i=0; i<80; i++) {
     const star = document.createElement('div');
     star.classList.add('star');
-
     const speedClass = i % 3 === 0 ? 'slow' : (i % 3 === 1 ? 'medium' : 'fast');
     star.classList.add(speedClass);
-
-    const posX = Math.random() * window.innerWidth;
-    const posY = Math.random() * window.innerHeight;
-
-    star.style.left = posX + 'px';
-    star.style.top = posY + 'px';
-
-    // Rastgele animasyon süresi (hızlar arasında küçük farklılık)
-    if(speedClass === 'slow') star.style.animationDuration = (45 + Math.random() * 10) + 's';
-    else if(speedClass === 'medium') star.style.animationDuration = (30 + Math.random() * 10) + 's';
-    else star.style.animationDuration = (15 + Math.random() * 10) + 's';
-
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    star.style.top = Math.random() * window.innerHeight + 'px';
+    star.style.animationDuration = (15 + Math.random() * 30) + 's';
     final.appendChild(star);
   }
-
-  // 30 kalp
   for(let i=0; i<30; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart');
-    heart.style.left = (Math.random() * window.innerWidth) + 'px';
-    heart.style.top = (Math.random() * window.innerHeight) + 'px';
-
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.top = Math.random() * window.innerHeight + 'px';
     heart.style.animationDuration = (1.5 + Math.random() * 2.5) + 's';
-
     final.appendChild(heart);
   }
-
-  // 40 baloncuk
   for(let i=0; i<40; i++) {
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
-    bubble.style.left = (Math.random() * window.innerWidth) + 'px';
+    bubble.style.left = Math.random() * window.innerWidth + 'px';
     bubble.style.top = (window.innerHeight + Math.random() * 150) + 'px';
     bubble.style.animationDuration = (4 + Math.random() * 6) + 's';
     bubble.style.animationDelay = (Math.random() * 5) + 's';
-
     final.appendChild(bubble);
   }
 }
 
-
-  showGroup(currentGroup);
+showGroup(currentGroup);
 </script>
 
 </body>
