@@ -20,7 +20,6 @@
       text-align: center;
       padding: 20px;
       transition: background 2s ease;
-      position: relative;
     }
 
     .photo-group {
@@ -55,13 +54,6 @@
       opacity: 0;
       transition: opacity 1.2s ease;
       user-select: none;
-      text-align: justify;
-      text-align-last: left;
-      white-space: pre-wrap;
-      letter-spacing: 0.05em;
-      line-height: 1.6;
-      overflow-wrap: break-word;
-      padding: 0 10px;
     }
 
     .text-group.visible {
@@ -75,14 +67,6 @@
       gap: 40px;
       animation: fadeIn 3s ease forwards;
       user-select: none;
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: white;
-      color: #1a3c78;
-      overflow: hidden;
-      background: linear-gradient(180deg, #fff, #0b3c6b);
-      transition: background 3s ease;
     }
 
     #continueBtn {
@@ -97,7 +81,6 @@
       font-weight: 700;
       box-shadow: 0 0 20px #1e90ff;
       transition: background-color 0.4s ease, box-shadow 0.4s ease;
-      z-index: 10;
     }
 
     #continueBtn:hover {
@@ -105,8 +88,21 @@
       box-shadow: 0 0 30px #1070cc;
     }
 
+    /* Son sayfa görsel efektleri */
+    #final-screen .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #65aaff 15%, transparent 70%), 
+                  radial-gradient(circle at 70% 80%, #7fcfff 10%, transparent 60%);
+      opacity: 0.7;
+      animation: pulse 5s ease-in-out infinite;
+      z-index: -1;
+    }
+
     #final-screen .glow-text {
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 700;
       color: #a3d1ff;
       text-shadow:
@@ -115,111 +111,30 @@
         0 0 30px #5a9eff,
         0 0 40px #5a9eff;
       animation: glow 3s ease-in-out infinite alternate;
-      z-index: 10;
-      margin-top: 30vh;
     }
 
-    /* Animasyonlar */
     @keyframes fadeIn {
       from {opacity: 0;}
       to {opacity: 1;}
     }
 
+    @keyframes pulse {
+      0%, 100% {opacity: 0.7;}
+      50% {opacity: 1;}
+    }
+
     @keyframes glow {
-      0% {
-        text-shadow:
-          0 0 10px #a3d1ff,
-          0 0 20px #6cb3ff,
-          0 0 30px #5a9eff,
-          0 0 40px #5a9eff;
-      }
-      100% {
-        text-shadow:
-          0 0 15px #d0e7ff,
-          0 0 25px #9ecfff,
-          0 0 35px #8ab8ff,
-          0 0 50px #7db0ff;
-      }
+      0% {text-shadow:
+        0 0 10px #a3d1ff,
+        0 0 20px #6cb3ff,
+        0 0 30px #5a9eff,
+        0 0 40px #5a9eff;}
+      100% {text-shadow:
+        0 0 15px #d0e7ff,
+        0 0 25px #9ecfff,
+        0 0 35px #8ab8ff,
+        0 0 50px #7db0ff;}
     }
-
-    /* Yıldızlar arka planı (çok küçük noktalar) */
-    .star {
-      position: fixed;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation-timing-function: linear;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    /* 3 farklı hızda yıldız animasyonları */
-    .star.slow {
-      animation-name: star-move-slow;
-      animation-duration: 50s;
-      animation-iteration-count: infinite;
-    }
-    .star.medium {
-      animation-name: star-move-medium;
-      animation-duration: 35s;
-      animation-iteration-count: infinite;
-    }
-    .star.fast {
-      animation-name: star-move-fast;
-      animation-duration: 20s;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes star-move-slow {
-      0% {transform: translateY(0);}
-      100% {transform: translateY(-150vh);}
-    }
-    @keyframes star-move-medium {
-      0% {transform: translateY(0);}
-      100% {transform: translateY(-200vh);}
-    }
-    @keyframes star-move-fast {
-      0% {transform: translateY(0);}
-      100% {transform: translateY(-250vh);}
-    }
-
-    /* Kalp animasyonu */
-    .heart {
-      position: fixed;
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(circle at center, #ff4d6d 70%, #a7002a 100%);
-      clip-path: polygon(50% 0%, 61% 15%, 75% 15%, 85% 30%, 85% 50%, 75% 70%, 50% 90%, 25% 70%, 15% 50%, 15% 30%, 25% 15%, 39% 15%);
-      animation: heart-pulse 3s ease-in-out infinite;
-      opacity: 0.8;
-      pointer-events: none;
-      z-index: 6;
-    }
-
-    @keyframes heart-pulse {
-      0%, 100% {transform: scale(1);}
-      50% {transform: scale(1.2);}
-    }
-
-    /* Baloncuk animasyonu */
-    .bubble {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle at center, #90cfff 70%, #317abb 100%);
-      border-radius: 50%;
-      opacity: 0.7;
-      animation: bubble-rise 6s linear infinite;
-      pointer-events: none;
-      z-index: 4;
-    }
-
-    @keyframes bubble-rise {
-      0% {transform: translateY(100vh) scale(1);}
-      100% {transform: translateY(-20vh) scale(0.5);}
-    }
-
-    /* Kalpler ve baloncuklar için rastgele pozisyonlar */
   </style>
 </head>
 <body>
@@ -233,6 +148,7 @@
   </div>
 
   <div id="final-screen">
+    <div class="stars"></div>
     <div class="glow-text">Hayallerimize Yolculuk...</div>
     <button id="continueBtn" onclick="goContinue()">◀️ Önceki Sayfa</button>
   </div>
@@ -264,92 +180,59 @@
 
   let currentGroup = 0;
 
-  // Harf harf yazdırma fonksiyonu
-  function typeText(text, element, callback) {
-    element.textContent = '';
-    let i = 0;
-    function addChar() {
-      if(i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
-        setTimeout(addChar, 40); // harf hızı (ms)
-      } else {
-        if(callback) callback();
-      }
+  function showGroup(index) {
+    if(index >= groups.length) {
+      // Tüm gruplar gösterildi, final ekran göster
+      displayArea.style.display = 'none';
+      document.body.style.background = "linear-gradient(135deg, #0b3c6b, #1a5ea8)";
+      finalScreen.style.display = 'flex';
+      return;
     }
-    addChar();
+
+    photoGroupEl.innerHTML = '';
+    textGroupEl.textContent = '';
+    textGroupEl.classList.remove('visible');
+
+    // Fotoğrafları ekle, başta görünmez
+    groups[index].photos.forEach(num => {
+      const img = document.createElement('img');
+      img.src = hayal/foto${num}.jpg;
+      photoGroupEl.appendChild(img);
+    });
+
+    const imgs = photoGroupEl.querySelectorAll('img');
+
+    // Fotoğrafları tek tek yavaşça sırayla göster
+    imgs.forEach((img, i) => {
+      setTimeout(() => {
+        img.classList.add('visible');
+      }, i * 1000); // 1 saniye aralık
+    });
+
+    // Yazıyı fotoğraflar görünmeye başladıktan sonra 2 saniye sonra göster
+    setTimeout(() => {
+      textGroupEl.textContent = groups[index].text;
+      textGroupEl.classList.add('visible');
+    }, imgs.length * 1000 + 500);
+
+    // 7 saniye sonra grup kaybolup diğer grup başlasın
+    setTimeout(() => {
+      imgs.forEach(img => img.classList.remove('visible'));
+      textGroupEl.classList.remove('visible');
+
+      // 2 saniye bekleyip sonraki grup
+      setTimeout(() => {
+        showGroup(index + 1);
+      }, 2000);
+    }, 7000);
   }
-
- function showGroup(index) {
-  if (index >= groups.length) {
-    // Final ekran
-    displayArea.style.display = 'none';
-    document.body.style.background = "linear-gradient(180deg, #fff, #0b3c6b)";
-    finalScreen.style.display = 'flex';
-    createDecorations();
-    return;
-  }
-
-  photoGroupEl.innerHTML = '';
-  textGroupEl.textContent = '';
-  textGroupEl.classList.remove('visible');
-
-  let loadedCount = 0;
-  const totalPhotos = groups[index].photos.length;
-
-  groups[index].photos.forEach(num => {
-    const img = document.createElement('img');
-     img.src = hayal/foto${num}.jpg;
-    img.style.opacity = '0';
-    img.style.filter = 'blur(8px)';
-
-    img.onload = () => {
-      loadedCount++;
-      if (loadedCount === totalPhotos) {
-        // Tüm resimler yüklendi, sırayla göster
-        const imgs = photoGroupEl.querySelectorAll('img');
-        imgs.forEach((image, i) => {
-          setTimeout(() => {
-            image.classList.add('visible');
-          }, i * 1000);
-        });
-
-        // Yazıyı göster
-        setTimeout(() => {
-          typeText(groups[index].text, textGroupEl, () => {
-            textGroupEl.classList.add('visible');
-          });
-        }, totalPhotos * 1000 + 400);
-
-        // 8 saniye sonra temizle ve sonraki grup
-        setTimeout(() => {
-          imgs.forEach(img => img.classList.remove('visible'));
-          textGroupEl.classList.remove('visible');
-          setTimeout(() => {
-            showGroup(index + 1);
-          }, 2000);
-        }, 8000);
-      }
-    };
-
-    photoGroupEl.appendChild(img);
-  });
-}
-
 
   function goContinue() {
     window.location.href = 'devam.html';
   }
 
-  // Dekorasyon olarak yıldız, kalp, baloncukları üret
-  function createDecorations() {
-    // Yıldızlar
-    for(let i=0; i<50; i++) {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      const size = Math.random()*2 + 1;
-      star.style.width = size + 'px';
-      star.style.height = size + 'px';
-      star.style.top = Math.random()*100 + 'vh';
-      star.style.left = Math.random()*100 + 'vw';
-      star.style.animationDuration = (Math.ran
+  showGroup(currentGroup);
+</script>
+
+</body>
+</html>
