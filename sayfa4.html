@@ -280,56 +280,62 @@
     addChar();
   }
 
-  function showGroup(index) {
-    if(index >= groups.length) {
-      // Tüm gruplar gösterildi, final ekran göster
-      displayArea.style.display = 'none';
-      document.body.style.background = "linear-gradient(180deg, #fff, #0b3c6b)";
-      finalScreen.style.display = 'flex';
-      createDecorations();
-      return;
-    }
-
-    photoGroupEl.innerHTML = '';
-    textGroupEl.textContent = '';
-    textGroupEl.classList.remove('visible');
-
-    // Fotoğrafları ekle, başta görünmez
-    groups[index].photos.forEach(num => {
-      const img = document.createElement('img');
-      img.src = `hayal/foto${num}.jpg`;
-      photoGroupEl.appendChild(img);
-    });
-
-    const imgs = photoGroupEl.querySelectorAll('img');
-
-    // Fotoğrafları tek tek yavaşça sırayla göster
-    imgs.forEach((img, i) => {
-      setTimeout(() => {
-        img.classList.add('visible');
-      }, i * 1000); // 1 saniye aralık
-    });
-
-    // Yazıyı fotoğraflar görünmeye başladıktan sonra harf harf yaz
-    setTimeout(() => {
-      typeText(groups[index].text, textGroupEl, () => {
-        // Yazı bittikten sonra görünür yap
-        textGroupEl.classList.add('visible');
-      });
-    }, imgs.length * 1000 + 400);
-
-    // Grup toplam süresi: fotoğraf + yazı + bekleme
-    // Yaklaşık 8 saniye sonra grup kaybolup diğer grup başlasın
-    setTimeout(() => {
-      imgs.forEach(img => img.classList.remove('visible'));
-      textGroupEl.classList.remove('visible');
-
-      // 2 saniye bekleyip sonraki grup
-      setTimeout(() => {
-        showGroup(index + 1);
-      }, 2000);
-    }, 8000);
+ function showGroup(index) {
+  if (index >= groups.length) {
+    // Final ekran
+    displayArea.style.display = 'none';
+    document.body.style.background = "linear-gradient(180deg, #fff, #0b3c6b)";
+    finalScreen.style.display = 'flex';
+    createDecorations();
+    return;
   }
+
+  photoGroupEl.innerHTML = '';
+  textGroupEl.textContent = '';
+  textGroupEl.classList.remove('visible');
+
+  let loadedCount = 0;
+  const totalPhotos = groups[index].photos.length;
+
+  groups[index].photos.forEach(num => {
+    const img = document.createElement('img');
+    img.src = `hayal/foto${num}.jpg`;
+    img.style.opacity = '0';
+    img.style.filter = 'blur(8px)';
+
+    img.onload = () => {
+      loadedCount++;
+      if (loadedCount === totalPhotos) {
+        // Tüm resimler yüklendi, sırayla göster
+        const imgs = photoGroupEl.querySelectorAll('img');
+        imgs.forEach((image, i) => {
+          setTimeout(() => {
+            image.classList.add('visible');
+          }, i * 1000);
+        });
+
+        // Yazıyı göster
+        setTimeout(() => {
+          typeText(groups[index].text, textGroupEl, () => {
+            textGroupEl.classList.add('visible');
+          });
+        }, totalPhotos * 1000 + 400);
+
+        // 8 saniye sonra temizle ve sonraki grup
+        setTimeout(() => {
+          imgs.forEach(img => img.classList.remove('visible'));
+          textGroupEl.classList.remove('visible');
+          setTimeout(() => {
+            showGroup(index + 1);
+          }, 2000);
+        }, 8000);
+      }
+    };
+
+    photoGroupEl.appendChild(img);
+  });
+}
+
 
   function goContinue() {
     window.location.href = 'devam.html';
