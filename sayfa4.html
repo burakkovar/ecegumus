@@ -54,15 +54,12 @@
       opacity: 0;
       transition: opacity 1.2s ease;
       user-select: none;
-      /* İki yana yaslama */
       text-align: justify;
-      /* Son satırı sola hizala */
       text-align-last: left;
-      /* Harf aralıkları ve satır yüksekliği */
       letter-spacing: 0.05em;
       line-height: 1.6;
       padding: 0 10px;
-      white-space: pre-wrap; /* satır sonlarında kırılma için */
+      white-space: pre-wrap;
     }
 
     .text-group.visible {
@@ -79,7 +76,6 @@
       position: relative;
       width: 100vw;
       height: 100vh;
-      /* Beyazdan degradeye arka plan */
       background: linear-gradient(180deg, #fff, #0b3c6b);
       color: #1a3c78;
       overflow: hidden;
@@ -122,7 +118,6 @@
       padding: 0 20px;
     }
 
-    /* Animasyonlar */
     @keyframes fadeIn {
       from {opacity: 0;}
       to {opacity: 1;}
@@ -145,8 +140,6 @@
       }
     }
 
-
-    /* Yıldızlar */
     .star {
       position: fixed;
       background: white;
@@ -191,7 +184,6 @@
       100% {transform: translateY(-250vh);}
     }
 
-    /* Kalpler */
     .heart {
       position: fixed;
       width: 30px;
@@ -209,7 +201,6 @@
       50% {transform: scale(1.2);}
     }
 
-    /* Baloncuklar */
     .bubble {
       position: fixed;
       width: 20px;
@@ -231,7 +222,6 @@
 </head>
 <body>
 
-  <!-- 🎵 MÜZİK -->
   <audio src="muzik5.mp3" autoplay loop></audio>
   
   <div id="display-area">
@@ -280,7 +270,7 @@
       if (i < text.length) {
         element.textContent += text.charAt(i);
         i++;
-        setTimeout(addChar, 40);
+        setTimeout(addChar, 60); // 60 ms aralık
       } else {
         if(callback) callback();
       }
@@ -302,7 +292,6 @@
     textGroupEl.textContent = '';
     textGroupEl.classList.remove('visible');
 
-    // Fotoğrafları ekle, başta görünmez
     groups[index].photos.forEach(num => {
       const img = document.createElement('img');
       img.src = `hayal/foto${num}.jpg`;
@@ -311,21 +300,18 @@
 
     const imgs = photoGroupEl.querySelectorAll('img');
 
-    // Fotoğrafları sırayla göster
     imgs.forEach((img, i) => {
       setTimeout(() => {
         img.classList.add('visible');
       }, i * 1000);
     });
 
-    // Yazıyı fotoğraflar görünmeye başladıktan sonra harf harf yazdır
     setTimeout(() => {
       typeText(groups[index].text, textGroupEl, () => {
         textGroupEl.classList.add('visible');
       });
     }, imgs.length * 1000 + 200);
 
-    // 8 saniye sonra fotoğraf ve yazıları gizle, sonraki gruba geç
     setTimeout(() => {
       imgs.forEach(img => img.classList.remove('visible'));
       textGroupEl.classList.remove('visible');
@@ -340,20 +326,16 @@
     window.location.href = 'devam.html';
   }
 
-  // Son sayfa dekorasyonları: yıldızlar, kalpler, baloncuklar
   function createDecorations() {
     const final = document.getElementById('final-screen');
 
-    // Yıldızlar (köşelere ve rastgele yerlere)
     for(let i=0; i<40; i++) {
       const star = document.createElement('div');
       star.classList.add('star');
 
-      // Farklı hız ve boyut
       const speedClass = i % 3 === 0 ? 'slow' : (i % 3 === 1 ? 'medium' : 'fast');
       star.classList.add(speedClass);
 
-      // Rastgele pozisyon (köşelere yakın olacak şekilde)
       const posX = Math.random() * window.innerWidth;
       const posY = Math.random() * window.innerHeight;
 
@@ -363,29 +345,23 @@
       final.appendChild(star);
     }
 
-    // Kalpler rastgele konumda ve animasyonlu
     for(let i=0; i<15; i++) {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = (Math.random() * window.innerWidth) + 'px';
       heart.style.top = (Math.random() * window.innerHeight) + 'px';
 
-      // Animasyon süresini biraz değiştir
       heart.style.animationDuration = (2 + Math.random() * 2) + 's';
 
       final.appendChild(heart);
     }
 
-    // Baloncuklar yukarı doğru hareket
     for(let i=0; i<20; i++) {
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
       bubble.style.left = (Math.random() * window.innerWidth) + 'px';
-      // Başlangıç y konumu biraz aşağıda
       bubble.style.top = (window.innerHeight + Math.random() * 100) + 'px';
-      // Farklı animasyon süreleri
       bubble.style.animationDuration = (5 + Math.random() * 5) + 's';
-      // Rastgele animasyon gecikmesi
       bubble.style.animationDelay = (Math.random() * 5) + 's';
 
       final.appendChild(bubble);
