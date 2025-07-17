@@ -307,9 +307,8 @@
     });
 
     setTimeout(() => {
-      typeText(groups[index].text, textGroupEl, () => {
-        textGroupEl.classList.add('visible');
-      });
+      textGroupEl.classList.add('visible'); // Yazıyı önce görünür yapıyoruz
+      typeText(groups[index].text, textGroupEl);
     }, imgs.length * 1000 + 200);
 
     setTimeout(() => {
