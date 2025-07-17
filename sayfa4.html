@@ -28,23 +28,36 @@
     }
 
     .photo-group {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-    .photo-group img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      opacity: 0;
-      filter: blur(8px);
-      transition: opacity 1.2s ease, filter 1.2s ease;
-      user-select: none;
-    }
+.photo-group img {
+  width: 30%;
+  max-width: 120px;
+  height: auto;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* Mobil uyum için */
+@media (max-width: 768px) {
+  .photo-group {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .photo-group img {
+    width: 30%;
+    max-width: 100px;
+  }
+}
+
 
     .photo-group img.visible {
       opacity: 1;
